@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" dir="ltr" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Pentago</title>
+<link rel="stylesheet" type="text/css" href="pentago.css" />
+<script type="text/javascript" src="mootools.js"></script>
+<script type="text/javascript" src="pentago.site.js"></script>
+</head>
+<body>
+<div id="container">
+<h1>Pentago online</h1>
+
+<div id="menu">
+	<a href="javascript:newgame();">New Game</a> |
+	<a href="javascript:undo();">Undo</a>
+	<a href="javascript:undo_history();"><img src="images/arrow-down.png" width="7" height="4" alt="" /></a> |
+	<a href="#about" id="about-link">About</a>
+</div>
+
+<div id="about">
+	<h2>About</h2>
+	<blockquote cite="http://en.wikipedia.org/wiki/Pentago">
+	<p>Pentago is a two-player abstract strategy game invented by the <a href="http://www.mindtwisterusa.com/" title="Mindtwister">Swedish company Mindtwister</a>.</p>
+	<p>The game is played on a 6x6 board divided into four 3x3 sub-boards (or quadrants). Taking turns, the two players place a marble of their colour (either black or white) onto an unoccupied space on the board, and then rotate one of the sub-boards by 90 degrees either clockwise or counter-clockwise. A player wins by getting five of their marbles in a vertical, horizontal or diagonal row (either before or after the sub-board rotation in their move). If all 36 spaces on the board are occupied without a row of five being formed then the game is a draw.</p>
+	<p>Retrieved from &quot;<a href="http://en.wikipedia.org/wiki/Pentago" title="Pentago">http://en.wikipedia.org/wiki/Pentago</a>&quot;</p>
+	</blockquote>
+</div>
+
+<div id="undo-history"> </div>
+
+<div id="status"> </div>
+
+<table id="main-pentago">
+<tr>
+	<td id="main-pentago-cell-1" class="main-pentago-cell">
+		<div>
+		<p class="rotation-buttons">
+		<a href="javascript:rotate('table-block-1','left');" class="rotate-left" title="Rotate Left">Rotate Left</a>
+		<a href="javascript:rotate('table-block-1','right');" class="rotate-right" title="Rotate Right">Rotate Right</a>
+		</p>
+		<table class="table-block" id="table-block-1">
+		<tr>
+		<td id="c00"><span></span></td>
+		<td id="c01"><span></span></td>
+		<td id="c02"><span></span></td>
+		</tr>
+		<tr>
+		<td id="c10"><span></span></td>
+		<td id="c11"><span></span></td>
+		<td id="c12"><span></span></td>
+		</tr>
+		<tr>
+		<td id="c20"><span></span></td>
+		<td id="c21"><span></span></td>
+		<td id="c22"><span></span></td>
+		</tr>
+		</table>
+		</div>
+	</td>
+	<td id="main-pentago-cell-2" class="main-pentago-cell">
+		<div>
+		<p class="rotation-buttons">
+		<a href="javascript:rotate('table-block-2','left');" class="rotate-left" title="Rotate Left">Rotate Left</a>
+		<a href="javascript:rotate('table-block-2','right');" class="rotate-right" title="Rotate Right">Rotate Right</a>
+		</p>
+		<table class="table-block" id="table-block-2">
+		<tr>
+		<td id="c03"><span></span></td>
+		<td id="c04"><span></span></td>
+		<td id="c05"><span></span></td>
+		</tr>
+		<tr>
+		<td id="c13"><span></span></td>
+		<td id="c14"><span></span></td>
+		<td id="c15"><span></span></td>
+		</tr>
+		<tr>
+		<td id="c23"><span></span></td>
+		<td id="c24"><span></span></td>
+		<td id="c25"><span></span></td>
+		</tr>
+		</table>
+		</div>
+	</td>
+</tr>
+<tr>
+	<td id="main-pentago-cell-3" class="main-pentago-cell">
+		<div>
+		<table class="table-block" id="table-block-3">
+		<tr>
+		<td id="c30"><span></span></td>
+		<td id="c31"><span></span></td>
+		<td id="c32"><span></span></td>
+		</tr>
+		<tr>
+		<td id="c40"><span></span></td>
+		<td id="c41"><span></span></td>
+		<td id="c42"><span></span></td>
+		</tr>
+		<tr>
+		<td id="c50"><span></span></td>
+		<td id="c51"><span></span></td>
+		<td id="c52"><span></span></td>
+		</tr>
+		</table>
+		<p class="rotation-buttons">
+		<a href="javascript:rotate('table-block-3','left');" class="rotate-left" title="Rotate Left">Rotate Left</a>
+		<a href="javascript:rotate('table-block-3','right');" class="rotate-right" title="Rotate Right">Rotate Right</a>
+		</p>
+		</div>
+	</td>
+	<td id="main-pentago-cell-4" class="main-pentago-cell">
+		<div>
+		<table class="table-block" id="table-block-4">
+		<tr>
+		<td id="c33"><span></span></td>
+		<td id="c34"><span></span></td>
+		<td id="c35"><span></span></td>
+		</tr>
+		<tr>
+		<td id="c43"><span></span></td>
+		<td id="c44"><span></span></td>
+		<td id="c45"><span></span></td>
+		</tr>
+		<tr>
+		<td id="c53"><span></span></td>
+		<td id="c54"><span></span></td>
+		<td id="c55"><span></span></td>
+		</tr>
+		</table>
+		<p class="rotation-buttons">
+		<a href="javascript:rotate('table-block-4','left');" class="rotate-left" title="Rotate Left">Rotate Left</a>
+		<a href="javascript:rotate('table-block-4','right');" class="rotate-right" title="Rotate Right">Rotate Right</a>
+		</p>
+		</div>
+	</td>
+</tr>
+</table>
+
+<div id="player-labels">
+<span id="player-1-label"><input type="radio" name="player" id="player-1" checked="checked" />Player 1</span>
+<span id="player-2-label"><input type="radio" name="player" id="player-2" />Player 2</span>
+</div>
+
+<div id="debug"></div>
+<div id="debug1"></div>
+<div id="debug2"></div>
+<div id="debug3"></div>
+</div>
+</body>
+</html>
