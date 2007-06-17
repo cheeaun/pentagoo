@@ -18,7 +18,7 @@ window.addEvent('load', function() {
 	for(var m=0; m<6; m++)
 		for(var n=0; n<6; n++){
 			$('c'+m+n).className = 'off';
-			$('c'+m+n).setAttribute('onclick','javascript:place(this);');
+			$('c'+m+n).onclick = function(){place(this);};
 		}
 
 	initial();
@@ -51,7 +51,8 @@ function initial(){
 	$('player-1-label').setStyle('font-size', '4em');
 	$('player-2-label').setStyle('font-size', '1.2em');
 
-	$$('.rotation-buttons a').setOpacity(0);
+	$$('.rotation-buttons').setOpacity(0);
+	$$('.rotation-buttons').setStyle('z-index','3');
 
 	$$('.table-block').setOpacity(1);
 
@@ -274,12 +275,16 @@ function table_rotate_fx(table,direction){
 
 // Toggle rotate arrows effects
 function toggle_rotate_arrow_fx(){
-	var rotation_button = $$('.rotation-buttons a');
+	var rotation_button = $$('.rotation-buttons');
 
-	if(rotation_button[0].getStyle('opacity') == 0)
+	if(rotation_button[0].getStyle('opacity') == 0){
 		rotation_button.setOpacity(.4);
-	else
+		rotation_button.setStyle('z-index','5');
+	}
+	else{
 		rotation_button.setOpacity(0);
+		rotation_button.setStyle('z-index','3');
+	}
 }
 
 // Undo history panel
@@ -423,13 +428,14 @@ function check_win(){
 
 function check_5marbles(x,y, direction){
 	var valid = false;
-	var state = $('c'+x+y).getProperty('class');
+	var cell = $('c'+x+y);
+	var state = cell.getProperty('class');
 
 	if(state != 'off'){
 		switch(direction){
 			case 'horizontal':
 				for(var i=1; i<5; i++){
-					if(state != $('c'+x+(y+i)).getProperty('class')){
+					if(!cell.hasClass($('c'+x+(y+i)).getProperty('class'))){
 						valid = false;
 						break;
 					}
@@ -444,7 +450,7 @@ function check_5marbles(x,y, direction){
 
 			case 'vertical':
 				for(var i=1; i<5; i++){
-					if(state != $('c'+(x+i)+y).getProperty('class')){
+					if(!cell.hasClass($('c'+(x+i)+y).getProperty('class'))){
 						valid = false;
 						break;
 					}
@@ -459,7 +465,7 @@ function check_5marbles(x,y, direction){
 
 			case 'l-diagonal':
 				for(var i=1; i<5; i++){
-					if(state != $('c'+(x+i)+(y+i)).getProperty('class')){
+					if(!cell.hasClass($('c'+(x+i)+(y+i)).getProperty('class'))){
 						valid = false;
 						break;
 					}
@@ -474,7 +480,7 @@ function check_5marbles(x,y, direction){
 
 			case 'r-diagonal':
 				for(var i=1; i<5; i++){
-					if(state != $('c'+(x+i)+(y-i)).getProperty('class')){
+					if(!cell.hasClass($('c'+(x+i)+(y-i)).getProperty('class'))){
 						valid = false;
 						break;
 					}
