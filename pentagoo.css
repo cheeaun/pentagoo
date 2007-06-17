@@ -10,6 +10,12 @@ margin-bottom: 0;
 padding-bottom: 0;
 }
 
+h1 em{
+color: #5e99e8;
+background-color: transparent;
+font-style: normal;
+}
+
 a{
 color: #5e99e8;
 background-color: transparent;
@@ -45,6 +51,7 @@ padding: .2em 0;
 padding: .2em .1em;
 }
 
+#menu a:active,
 #menu a:focus{
 color: #5e99e8;
 background-color: #eee;
@@ -62,6 +69,7 @@ color: #000;
 background-color: #f9f9f9;
 border-bottom: 2px solid #85bcf3;
 }
+
 #about h2{
 margin: 0;
 padding: 10px 10px 0;
@@ -76,7 +84,13 @@ margin: 0;
 padding: 0 0 10px;
 }
 
+#undo-history ol{
+margin: 1em 3em;
+padding: 0;
+}
+
 .close{
+position: relative;
 text-align: right;
 }
 .close a{
@@ -149,6 +163,10 @@ right: 5px;
 #main-pentago-cell-4 .rotation-buttons{
 top: 5px;
 left: 5px;
+}
+
+.rotation-buttons{
+z-index: 3;
 }
 
 .rotation-buttons a{
