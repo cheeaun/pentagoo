@@ -78,16 +78,9 @@ function about(){
 
 // New game button
 function newgame(){
-	$$('.table-block').each(function(block,i){
-		var trs = block.getElementsByTagName('TR');
-		for (var i=0; i<trs.length; i++) {
-			var cells = trs[i].cells;
-			for (var j=0; j<cells.length; j++) {
-				var c = cells[j];
-				c.setAttribute('class','off');
-			}
-		}
-	});
+	for(var m=0; m<6; m++)
+		for(var n=0; n<6; n++)
+			$('c'+m+n).className = 'off';
 
 	initial();
 
@@ -140,39 +133,25 @@ function rotate(t,direction){
 		var cells = trs[i].cells;
 		matrix[i] = [];
 		rotated_matrix[i] = [];
-		for (var j=0; j<cells.length; j++) {
-			matrix[i][j] = cells[j].getAttribute('class');
-		}
+		for (var j=0; j<cells.length; j++)
+			matrix[i][j] = cells[j].className;
 	}
 
 	if(direction == 'right'){
-		rotated_matrix[0][0] = matrix[2][0];
-		rotated_matrix[0][1] = matrix[1][0];
-		rotated_matrix[0][2] = matrix[0][0];
-		rotated_matrix[1][0] = matrix[2][1];
-		rotated_matrix[1][2] = matrix[0][1];
-		rotated_matrix[2][0] = matrix[2][2];
-		rotated_matrix[2][1] = matrix[1][2];
-		rotated_matrix[2][2] = matrix[0][2];
+		for(var r=0 ; r<=2 ; r++ )
+			for(var rr=0 ; rr<=2 ; rr++ )
+				rotated_matrix[r][rr] = matrix[(2-rr)][r];
 	}
 	else{
-		rotated_matrix[0][0] = matrix[0][2];
-		rotated_matrix[0][1] = matrix[1][2];
-		rotated_matrix[0][2] = matrix[2][2];
-		rotated_matrix[1][0] = matrix[0][1];
-		rotated_matrix[1][2] = matrix[2][1];
-		rotated_matrix[2][0] = matrix[0][0];
-		rotated_matrix[2][1] = matrix[1][0];
-		rotated_matrix[2][2] = matrix[2][0];
+		for(var r=0 ; r<=2 ; r++ )
+			for(var rr=0 ; rr<=2 ; rr++ )
+				rotated_matrix[r][rr] = matrix[rr][(2-r)];
 	}
-	rotated_matrix[1][1] = matrix[1][1];
 
 	for (var i=0; i<trs.length; i++) {
 		var cells = trs[i].cells;
-		for (var j=0; j<cells.length; j++) {
-			var ce = cells[j];
-			ce.setAttribute('class',rotated_matrix[i][j]);
-		}
+		for (var j=0; j<cells.length; j++)
+			cells[j].className = rotated_matrix[i][j];
 	}
 
 	set_turn(1);
