@@ -8,12 +8,16 @@ h1{
 font-weight: normal;
 margin-bottom: 0;
 padding-bottom: 0;
+font-size: 2.2em;
 }
 
 h1 em{
 color: #5e99e8;
 background-color: transparent;
 font-style: normal;
+position: relative;
+bottom: .3em;
+right: .1em;
 }
 
 a{
@@ -35,30 +39,35 @@ table{
 border-collapse: collapse;
 }
 
+/* CONTAINER */
+
 #container{
 width: 520px;
 margin: auto;
 }
 
+/* MENU */
+
 #menu{
-color: #eee;
+color: #e0e0e0;
 margin: auto;
 border-bottom: 2px solid #85bcf3;
 padding: .2em 0;
 }
 
 #menu a{
-padding: .2em .1em;
+padding: .2em .3em;
 }
 
-#menu a:active,
-#menu a:focus{
+#menu a:hover,
+#menu a.focus{
 color: #5e99e8;
-background-color: #eee;
+background-color: #f0f7fd;
 }
 
-#about,
-#undo-history{
+/* PANEL */
+
+.panel{
 position: absolute;
 z-index: 999;
 width: 500px;
@@ -70,38 +79,81 @@ background-color: #f9f9f9;
 border-bottom: 2px solid #85bcf3;
 }
 
-#about h2{
+.panel h2{
 margin: 0;
 padding: 10px 10px 0;
 font-weight: normal;
+font-size: 1.3em;
 }
-#about blockquote{
-margin: 0;
-padding: 10px;
+.panel blockquote,
+.section{
+margin: 0 0 1em;
+padding: 10px 10px 0;
+color: #000;
+background-color: #fff;
+border: 1px solid #ddd;
 }
-#about p{
+.panel p{
 margin: 0;
 padding: 0 0 10px;
 }
 
-#undo-history ol{
-margin: 1em 3em;
+.panel ol{
+margin: 0 2em 1em;
 padding: 0;
 }
 
-.close{
+p.panel-button{
 position: relative;
 text-align: right;
+margin: 1em 0 0;
 }
-.close a{
+.panel-button a{
 color: #5e99e8;
 background-color: #fff;
-padding: .3em .6em;
-border: 1px solid #ccc;
+padding: .1em .5em;
+border: 2px solid #ccc;
+border: 2px solid #85bcf3;
 }
-.close a:focus{
+
+.panel-button a:hover,
+.panel-button a:focus{
 color: #5e99e8;
-background-color: #eee;
+background-color: #f0f7fd;
+}
+
+.players-setup{
+margin: 0;
+padding: 0;
+list-style: none;
+}
+
+.players-setup li{
+clear: left;
+padding: 10px 10px 0;
+margin: 0 0 10px;
+color: #000;
+background-color: #fff;
+border: 1px solid #ddd;
+}
+
+.players-setup li h3{
+margin: 0;
+padding: 0;
+float: left;
+width: 200px;
+}
+
+.players-setup li label{
+padding: .5em 1em;
+}
+
+/* BOARD */
+
+#board-cover{
+position: absolute;
+width: 520px;
+height: 520px;
 }
 
 #main-pentago{
@@ -144,55 +196,25 @@ padding: 0;
 z-index: 4;
 }
 
-#table-block-1,
+#t1,
 #main-pentago-cell-1 .rotation-buttons{
 bottom: 5px;
 right: 5px;
 }
-#table-block-2,
+#t2,
 #main-pentago-cell-2 .rotation-buttons{
 bottom: 5px;
 left: 5px;
 }
-#table-block-3,
+#t3,
 #main-pentago-cell-3 .rotation-buttons{
 top: 5px;
 right: 5px;
 }
-#table-block-4,
+#t4,
 #main-pentago-cell-4 .rotation-buttons{
 top: 5px;
 left: 5px;
-}
-
-.rotation-buttons{
-z-index: 3;
-}
-
-.rotation-buttons a{
-position: absolute;
-width: 50px;
-height: 50px;
-color: inherit;
-background-color: transparent;
-background-position: center;
-background-repeat: no-repeat;
-text-indent: -999em;
-z-index: 5;
-overflow: auto;
-cursor: pointer;
-}
-
-.rotate-left{
-background-image: url(images/rotate-arrow-left.png);
-left: 20px;
-bottom: 20px;
-}
-
-.rotate-right{
-background-image: url(images/rotate-arrow-right.png);
-right: 20px;
-top: 20px;
 }
 
 .main-pentago-cell table td,
@@ -211,26 +233,64 @@ background-repeat: no-repeat;
 display: block;
 }
 
+.main-pentago-cell table td.last,
 .main-pentago-cell table td.win{
 background-image: url(images/winning-piece.png);
 }
 
-.main-pentago-cell table td.player-1-on span{
+.main-pentago-cell table td.p1 span{
 background-image: url(images/white-piece.png);
 }
 
-.main-pentago-cell table td.player-2-on span{
+.main-pentago-cell table td.p2 span{
 background-image: url(images/black-piece.png);
 }
 
-.main-pentago-cell table td.off:hover span{
+.main-pentago-cell table td.hole:hover span{
 background-image: url(images/hole-select.png);
 cursor: pointer;
 }
-#main-pentago.noturn .main-pentago-cell  table td.off:hover span{
+#main-pentago.noturn .main-pentago-cell  table td.hole:hover span{
 background-image: none;
 cursor: default;
 }
+
+/* ROTATION BUTTONS */
+
+.rotation-buttons{
+z-index: 3;
+}
+
+.rotation-buttons a{
+position: absolute;
+width: 50px;
+height: 50px;
+color: inherit;
+background: transparent url(images/rotate-arrows.png) no-repeat;
+text-indent: -999em;
+z-index: 5;
+overflow: auto;
+cursor: pointer;
+}
+
+.rotation-buttons .rotate-left{
+left: 20px;
+bottom: 20px;
+}
+.rotation-buttons .rotate-left:hover{
+background-position: bottom left;
+}
+
+.rotation-buttons .rotate-right{
+background-position: top right;
+right: 20px;
+top: 20px;
+}
+.rotation-buttons .rotate-right:hover{
+background-position: bottom right;
+}
+
+/* LABELS */
 
 #player-labels span{
 position: absolute;
@@ -253,6 +313,8 @@ right: 10px;
 background: transparent url(images/black-piece.png) right center no-repeat;
 padding: 20px 50px 20px 0;
 }
+
+/* STATUS */
 
 #status{
 position: absolute;
