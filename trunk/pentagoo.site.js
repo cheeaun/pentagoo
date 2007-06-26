@@ -422,6 +422,7 @@ function check_win(){
 	display_status(status, true);
 
 	if(game == 0) board_cover(false,true);
+	else board_cover(true);
 }
 
 // Check validity for 5 straight marbles
