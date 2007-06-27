@@ -527,9 +527,9 @@ function display_status(text,state){
 	}
 	else{
 		$('status').innerHTML = text;
-//		status_effect.start(1);
+		status_effect.start(1);
 		if(!state){
-//			status_effect.start.pass(0,status_effect).delay(2000);
+			status_effect.start.pass(0,status_effect).delay(2000);
 		}
 	}
 }
