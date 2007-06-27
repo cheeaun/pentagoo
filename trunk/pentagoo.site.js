@@ -54,6 +54,10 @@ function initial(){
 function preload_stuff(){
 	var path = 'images/';
 	var images = [
+		path + 'hole-select.png.png',
+		path + 'white-piece.png',
+		path + 'black-piece.png',
+		path + 'rotate-arrows.png',
 		path + 'pentago-subboard-15deg.png',
 		path + 'pentago-subboard-30deg.jpg',
 		path + 'pentago-subboard-45deg.png',
@@ -61,14 +65,14 @@ function preload_stuff(){
 		path + 'pentago-subboard-75deg.png'
 	];
 
+	display_status('Loading...');
+	board_cover(true);
+
 	new Asset.images(images, {
-		onProgress: function(){
-			display_status('Loading...');
-//			board_cover(true);
-		}/*,
 		onComplete: function(){
+			display_status('Done.');
 			board_cover(false);
-		}*/
+		}
 	});
 }
 
@@ -169,12 +173,10 @@ function rotate(table, direction){
 	update_history(table+direction);
 	rotate_arrow_fx(0);
 	var time = table_rotate_fx(table,direction);
+	check_win();
+	if(game == 0) switch_player();
 	(function(){
-		check_win();
-		if(game == 0){
-			switch_player();
-			if(game_type == 1) computer_action();
-		}
+		if(game == 0 && game_type == 1) computer_action();
 	}).delay(time);
 }
 
@@ -217,8 +219,7 @@ function update_history(move_type){
 
 	// the validation:
 	// 1. history index is EVEN (0,2,4...) and the move is PLACE (c)
-	// 2. history index is ODD (1,2,3...) and the move is ROTATE (t)
-	// the moves are always alternating
+	// 2. history index is ODD (1,3,5...) and the move is ROTATE (t)
 	if((last_index%2 == 0 && this_move == 'c') || (last_index%2 != 0 && this_move == 't'))
 		history_list.push('p' + player_turn() + '-' + move_type);
 	else{ // ERROR occurs!
@@ -317,29 +318,30 @@ function generate_history(){
 	var h = history_list.length;
 	$('history-list').empty();
 
-	for(var i=0, j=h ; i<h, j>0 ; i++, j--){
-		var item = history_list[i];
-		if(item){
-			var player = 'Player' + item.substring(1,2);
-			var action_1 = item.substring(3,4);
-			var action_2 = item.substring(4,5);
-			var action_3 = item.substring(5,6);
-			var player_action;
+	if(h != 0)
+		for(var i=0, j=h ; i<h, j>0 ; i++, j--){
+			var item = history_list[i];
+			if(item){
+				var player = 'Player' + item.substring(1,2);
+				var action_1 = item.substring(3,4);
+				var action_2 = item.substring(4,5);
+				var action_3 = item.substring(5,6);
+				var player_action;
 
-			if(action_1 == 'c'){
-				player_action = 'Placed a marble on space ( row ' + (action_2.toInt()+1) + ', column ' + (action_3.toInt()+1) + ' )';
-			}
-			else if(action_1 == 't'){
-				player_action = 'Rotated sub-board ' + action_2 + ' to the ';
-				if(action_3 == 'l')
-					player_action += 'left ( counter-clockwise )';
-				else
-					player_action += 'right ( clockwise )';
-			}
+				if(action_1 == 'c'){
+					player_action = 'Placed a marble on space ( row ' + (action_2.toInt()+1) + ', column ' + (action_3.toInt()+1) + ' )';
+				}
+				else if(action_1 == 't'){
+					player_action = 'Rotated sub-board ' + action_2 + ' to the ';
+					if(action_3 == 'l')
+						player_action += 'left ( counter-clockwise )';
+					else
+						player_action += 'right ( clockwise )';
+				}
 
-			$('history-list').innerHTML += '<li>' + player + ' : ' + player_action + '.</li>';
+				$('history-list').innerHTML += '<li>' + player + ' : ' + player_action + '.</li>';
+			}
 		}
-	}
 }
 
 // Undo last move
@@ -525,9 +527,9 @@ function display_status(text,state){
 	}
 	else{
 		$('status').innerHTML = text;
-		status_effect.start(1);
+//		status_effect.start(1);
 		if(!state){
-			status_effect.start.pass(0,status_effect).delay(2000);
+//			status_effect.start.pass(0,status_effect).delay(2000);
 		}
 	}
 }
@@ -561,10 +563,10 @@ function computer_action(){
 					move_rotate(t,d);
 					update_history(t+d);
 					var time = table_rotate_fx(t,d);
+					check_win();
+					if(game == 0) switch_player();
 					(function(){
-						check_win();
 						if(game == 0){
-							switch_player();
 							board_cover(false);
 							if(game_type == 2) computer_action();
 						}
