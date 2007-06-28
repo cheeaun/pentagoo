@@ -35,6 +35,7 @@ function initial(){
 	game_type = 0;
 	history_list = [];
 	generate_history();
+	$('undo-link').addClass('disabled');
 
 	board_cover(false);
 
@@ -54,21 +55,25 @@ function initial(){
 function preload_stuff(){
 	var path = 'images/';
 	var images = [
-		path + 'hole-select.png.png',
+		path + 'hole-select.png',
 		path + 'white-piece.png',
 		path + 'black-piece.png',
 		path + 'rotate-arrows.png',
 		path + 'pentago-subboard-15deg.png',
-		path + 'pentago-subboard-30deg.jpg',
+		path + 'pentago-subboard-30deg.png',
 		path + 'pentago-subboard-45deg.png',
-		path + 'pentago-subboard-60deg.jpg',
+		path + 'pentago-subboard-60deg.png',
 		path + 'pentago-subboard-75deg.png'
 	];
+	var i;
 
-	display_status('Loading...');
 	board_cover(true);
 
 	new Asset.images(images, {
+		onProgress: function(i){
+			display_status('Loading (' + (i+1) + ' / ' + images.length + ')', true);
+//			$('debug').innerHTML = (i+1) + ' / ' + images.length;
+		},
 		onComplete: function(){
 			display_status('Done.');
 			board_cover(false);
@@ -137,9 +142,11 @@ function newgame(){
 // Place marble
 function place(piece){
 	var valid_move = move_place(piece);
-	update_history(piece.getProperty('id'));
-	check_win();
-	if(game == 0 && valid_move) rotate_arrow_fx(1);
+	if(valid_move){
+		update_history(piece.getProperty('id'));
+		check_win();
+		if(game == 0) rotate_arrow_fx(1);
+	}
 }
 
 // Place move
@@ -172,10 +179,12 @@ function rotate(table, direction){
 	move_rotate(table, direction);
 	update_history(table+direction);
 	rotate_arrow_fx(0);
+	board_cover(true);
 	var time = table_rotate_fx(table,direction);
 	check_win();
 	if(game == 0) switch_player();
 	(function(){
+		board_cover(false);
 		if(game == 0 && game_type == 1) computer_action();
 	}).delay(time);
 }
@@ -227,6 +236,9 @@ function update_history(move_type){
 		display_status('Sorry, an error has occured. Please start a new game.');
 	}
 
+	if(history_list.length>0 && game_type == 0)
+		$('undo-link').removeClass('disabled');
+
 	generate_history();
 }
 
@@ -262,20 +274,17 @@ function table_rotate_fx(table,direction){
 	var div = $(table).getParent();
 	var i = 0;
 	var deg;
-	var opac = [ .4 , .1 , 0 , .1 , .4 , 1 ];
+	var opac = [ .1 , 0 , .1 , .2 , .3 , 1 ];
 	var ori_bg = div.getStyle('background-image');
 	var PERIOD = 35;
-
-	board_cover(true,true);
 
 	var rotate_bg = (function(){
 		$(table).setOpacity(opac[i]);
 		i++;
-		
+
 		if(i == 6){
 			$clear(rotate_bg);
 			div.setStyle('background-image',ori_bg);
-			board_cover(false,true);
 			return;
 		}
 
@@ -303,14 +312,13 @@ function rotate_arrow_fx(state){
 }
 
 // Enable|disable the board for user input
-function board_cover(state,comp){
+function board_cover(state){
 	var cover = $('board-cover');
 
-	if(!comp)
-		if(state == true)
-			cover.setStyle('z-index','100');
-		else
-			cover.setStyle('z-index','0');
+	if(state == true)
+		cover.setStyle('z-index','100');
+	else
+		cover.setStyle('z-index','0');
 }
 
 // Generate history list
@@ -349,6 +357,7 @@ function undo(){
 	var last_action = history_list.getLast();
 
 	if(game_type == 0 && last_action){
+		$('undo-link').addClass('disabled');
 		var player = last_action.substring(0,2);
 		var action_string = last_action.substring(3);
 		var action = action_string.substring(0,1);
@@ -364,6 +373,7 @@ function undo(){
 		if(action == 'c'){
 			$(action_string).className = 'hole';
 			rotate_arrow_fx(0);
+			$('undo-link').removeClass('disabled');
 		}
 		else if(action == 't'){
 			var t = action_string.substring(0,2);
@@ -372,19 +382,22 @@ function undo(){
 
 			move_rotate(t, r_d);
 			var time = table_rotate_fx(t,r_d);
-			(function(){rotate_arrow_fx(1);}).delay(time);
+			switch_player();
+			(function(){
+				rotate_arrow_fx(1);
+				$('undo-link').removeClass('disabled');
+			}).delay(time);
 		}
 
 		history_list.pop();
 		generate_history();
 		display_status('');
+		if(history_list.length == 0) $('undo-link').addClass('disabled');
 	}
 }
 
 // Check winnnings or draws
 function check_win(){
-	board_cover(true,true);
-
 	// Check all horizontal and vertical wins
 	for(var i=0; i<6; i++)
 		for(var j=0; j<2; j++){
@@ -423,8 +436,7 @@ function check_win(){
 
 	display_status(status, true);
 
-	if(game == 0) board_cover(false,true);
-	else board_cover(true);
+	if(game > 0) board_cover(true);
 }
 
 // Check validity for 5 straight marbles
@@ -557,7 +569,6 @@ function computer_action(){
 		if(game == 0)
 			(function(){
 				if(game == 0){
-		//			board_cover(false);
 					var t = 't' + $random(1,4);
 					var d = $random(0,1) ? 'l' : 'r';
 					move_rotate(t,d);

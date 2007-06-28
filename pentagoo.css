@@ -65,6 +65,15 @@ color: #5e99e8;
 background-color: #f0f7fd;
 }
 
+
+#menu .disabled,
+#menu .disabled:hover{
+cursor: default;
+color: #aaa;
+background-color: transparent;
+text-decoration: none;
+}
+
 /* PANEL */
 
 .panel{
