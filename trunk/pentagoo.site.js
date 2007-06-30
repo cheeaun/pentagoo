@@ -2,6 +2,7 @@ var history_list; // history buffer
 var move; // 1: place ; 2: rotate
 var game; // 0: not game yet ; 1: player 1 wins ; 2: player 2 wins ; 3: player 1 and 2 wins ; 4: draw
 var game_type; // 0: human VS human ; 1: human VS computer (vice versa) ; 2: computer VS computer
+var pentago_matrix;
 
 // Event load
 window.addEvent('load', function() {
@@ -401,15 +402,15 @@ function check_win(){
 	// Check all horizontal and vertical wins
 	for(var i=0; i<6; i++)
 		for(var j=0; j<2; j++){
-			check_5marbles(i,j,'horizontal');
-			check_5marbles(j,i,'vertical');
+			check_5marbles(j,i,'horizontal');
+			check_5marbles(i,j,'vertical');
 		}
 
 	// Check diagonal wins
 	for(var k=0; k<2; k++)
 		for(var l=0; l<2; l++){
 			check_5marbles(k,l,'l-diagonal');
-			check_5marbles(k,(l+4),'r-diagonal');
+			check_5marbles((k+4),l,'r-diagonal');
 		}
 
 	// Check for draw game
@@ -442,29 +443,14 @@ function check_win(){
 // Check validity for 5 straight marbles
 function check_5marbles(x,y, direction){
 	var valid = false;
-	var cell = $('c'+x+y);
+	var cell = $('c'+y+x);
 	var state = cell.getProperty('class').substring(0,2);
 
 	if(state.contains('p')){
 		switch(direction){
 			case 'horizontal':
 				for(var i=1; i<5; i++){
-					if(!$('c'+x+(y+i)).hasClass(state)){
-						valid = false;
-						break;
-					}
-					else
-						valid = true;
-				}
-
-				if(valid)
-					for(var j=y; j<y+5; j++)
-						$('c'+x+j).addClass('win');
-				break;
-
-			case 'vertical':
-				for(var i=1; i<5; i++){
-					if(!$('c'+(x+i)+y).hasClass(state)){
+					if(!$('c'+y+(x+i)).hasClass(state)){
 						valid = false;
 						break;
 					}
@@ -474,12 +460,27 @@ function check_5marbles(x,y, direction){
 
 				if(valid)
 					for(var j=x; j<x+5; j++)
-						$('c'+j+y).addClass('win');
+						$('c'+y+j).addClass('win');
+				break;
+
+			case 'vertical':
+				for(var i=1; i<5; i++){
+					if(!$('c'+(y+i)+x).hasClass(state)){
+						valid = false;
+						break;
+					}
+					else
+						valid = true;
+				}
+
+				if(valid)
+					for(var j=y; j<y+5; j++)
+						$('c'+j+x).addClass('win');
 				break;
 
 			case 'l-diagonal':
 				for(var i=1; i<5; i++){
-					if(!$('c'+(x+i)+(y+i)).hasClass(state)){
+					if(!$('c'+(y+i)+(x+i)).hasClass(state)){
 						valid = false;
 						break;
 					}
@@ -488,13 +489,13 @@ function check_5marbles(x,y, direction){
 				}
 
 				if(valid)
-					for(var j=x, k=y; j<x+5, k<y+5; j++, k++)
-						$('c'+j+k).addClass('win');
+					for(var j=y, k=x; j<y+5, k<x+5; j++, k++)
+						$('c'+k+j).addClass('win');
 				break;
 
 			case 'r-diagonal':
 				for(var i=1; i<5; i++){
-					if(!$('c'+(x+i)+(y-i)).hasClass(state)){
+					if(!$('c'+(y+i)+(x-i)).hasClass(state)){
 						valid = false;
 						break;
 					}
@@ -503,8 +504,8 @@ function check_5marbles(x,y, direction){
 				}
 
 				if(valid)
-					for(var j=x, k=y; j<x+5, k>y-5; j++, k--)
-						$('c'+j+k).addClass('win');
+					for(var j=y, k=x; j<y+5, k>x-5; j++, k--)
+						$('c'+k+j).addClass('win');
 				break;
 		}
 	}
@@ -554,38 +555,62 @@ function computer_action(){
 
 	board_cover(true);
 
-	(function(){
-
-		do{
-			var x = $random(0,5);
-			var y = $random(0,5);
-			if(valid_move = move_place($('c'+x+y))){
-				update_history($('c'+x+y).getProperty('id'));
-				check_win();
-			}
+	var matrix = '';
+	for(var m=0; m<6; m++)
+		for(var n=0; n<6; n++){
+			if($('c'+m+n).hasClass('p1')) matrix += '1';
+			else if($('c'+m+n).hasClass('p2')) matrix += '2';
+			else matrix += '0';
 		}
-		while(!valid_move);
 
-		if(game == 0)
+	$('debug1').innerHTML = matrix;
+
+	var ajax_ai = new Ajax('pentagoo_ai.php?m=' + matrix + '&p=' + player,
+	{
+		method: 'get',
+		update: $('debug'),
+		onComplete: function(response){
 			(function(){
-				if(game == 0){
-					var t = 't' + $random(1,4);
-					var d = $random(0,1) ? 'l' : 'r';
-					move_rotate(t,d);
-					update_history(t+d);
-					var time = table_rotate_fx(t,d);
-					check_win();
-					if(game == 0) switch_player();
+				var x = response.substring(0,1);
+				var y = response.substring(1,2);
+/*
+				do{
+					var x = $random(0,5);
+					var y = $random(0,5);
+					if(valid_move = move_place($('c'+y+x))){
+						update_history($('c'+y+x).getProperty('id'));
+						check_win();
+					}
+				}
+				while(!valid_move);
+*/
+				valid_move = move_place($('c'+y+x));
+				update_history($('c'+y+x).getProperty('id'));
+				check_win();
+
+				if(valid_move && game == 0)
 					(function(){
 						if(game == 0){
-							board_cover(false);
-							if(game_type == 2) computer_action();
+							var t = 't' + response.substring(2,3);
+							var d = response.substring(3,4);
+//							var t = 't' + $random(1,4);
+//							var d = $random(0,1) ? 'l' : 'r';
+							move_rotate(t,d);
+							update_history(t+d);
+							var time = table_rotate_fx(t,d);
+							check_win();
+							if(game == 0) switch_player();
+							(function(){
+								if(game == 0){
+									board_cover(false);
+									if(game_type == 2) computer_action();
+								}
+							}).delay(time);
 						}
-					}).delay(time);
-				}
-			}).delay(TIME);
-	}).delay(TIME);
-
+					}).delay(TIME,response);
+			}).delay(TIME,response);
+		}
+	}).request();
 }
 
 // Easter egg
