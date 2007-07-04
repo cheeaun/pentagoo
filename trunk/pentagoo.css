@@ -299,7 +299,7 @@ top: 20px;
 background-position: bottom right;
 }
 
-/* LABELS */
+/* LABELS *
 
 #player-labels span{
 position: absolute;
@@ -321,6 +321,66 @@ padding: 20px 0 20px 50px;
 right: 10px;
 background: transparent url(images/black-piece.png) right center no-repeat;
 padding: 20px 50px 20px 0;
+}
+*/
+#player-labels li{
+position: absolute;
+top: 12em;
+width: 10em;
+list-style-type: none;
+padding-top: 50px;
+background-position: center 0;
+background-repeat: no-repeat;
+}
+
+#player-labels li .player-text{
+color: #000;
+background-color: #f0f7fd;
+background-repeat: no-repeat;
+padding: 5px 10px;
+font-weight: normal;
+}
+#player-labels li.current .player-text{
+color: #fff;
+background-color: #5e99e8;
+}
+#player-labels li.current span{
+display: block;
+width: 16px;
+height: 16px;
+color: inherit;
+background: transparent url(images/busy.gif)
+}
+
+#player-1-label{
+left: 0;
+background-image: url(images/white-piece.png);
+}
+#player-1-label .player-text{
+background-image: url(images/player-arrow-right.png);
+background-position: right center;
+}
+#player-1-label span{
+float: left;
+}
+
+#player-2-label{
+right: 0;
+background-image: url(images/black-piece.png);
+}
+#player-2-label .player-text{
+background-image: url(images/player-arrow-left.png);
+background-position: left center;
+}
+#player-2-label span{
+float: right;
+}
+
+#player-1-type,
+#player-2-type{
+color: #aaa;
+background-color: transparent;
+padding-top: .5em;
 }
 
 /* STATUS */
