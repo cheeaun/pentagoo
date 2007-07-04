@@ -2,7 +2,7 @@ var history_list; // history buffer
 var move; // 1: place ; 2: rotate
 var game; // 0: not game yet ; 1: player 1 wins ; 2: player 2 wins ; 3: player 1 and 2 wins ; 4: draw
 var game_type; // 0: human VS human ; 1: human VS computer (vice versa) ; 2: computer VS computer
-var pentago_matrix;
+var player; // 1: player 1 ; 2: player 2
 
 // Event load
 window.addEvent('load', function() {
@@ -40,9 +40,9 @@ function initial(){
 
 	board_cover(false);
 
-	$('player-1').checked = true;
-	$('player-1-label').setStyle('font-size', '4em');
-	$('player-2-label').setStyle('font-size', '1.2em');
+	player = 1;
+	$('player-1-label').addClass('current');
+	$('player-2-label').removeClass('current');
 
 	$$('.rotation-buttons').setOpacity(0);
 	$$('.rotation-buttons').setStyle('z-index','3');
@@ -57,8 +57,6 @@ function preload_stuff(){
 	var path = 'images/';
 	var images = [
 		path + 'hole-select.png',
-		path + 'white-piece.png',
-		path + 'black-piece.png',
 		path + 'rotate-arrows.png',
 		path + 'pentago-subboard-15deg.png',
 		path + 'pentago-subboard-30deg.png',
@@ -123,17 +121,24 @@ function newgame(){
 	initial();
 
 	slide_panel('new-game');
+	$('player-1-type').setHTML('Human');
+	$('player-2-type').setHTML('Human');
+
 
 	if($('p1-c-l').checked == true && $('p2-c-l').checked == true){
 		game_type = 2;
 		computer_action();
+		$('player-1-type').setHTML('Computer');
+		$('player-2-type').setHTML('Computer');
 	}
 	else if($('p1-c-l').checked == true){
 		game_type = 1;
 		computer_action();
+		$('player-1-type').setHTML('Computer');
 	}
 	else if($('p2-c-l').checked == true){
 		game_type = 1;
+		$('player-2-type').setHTML('Computer');
 	}
 	else{
 		game_type = 0;
@@ -153,7 +158,6 @@ function place(piece){
 // Place move
 function move_place(piece){
 	move = 1;
-
 	if(piece.hasClass('hole')){
 		// Remove 'last' move
 		for(var m=0; m<6; m++)
@@ -161,7 +165,6 @@ function move_place(piece){
 				$('c'+m+n).removeClass('last');
 
 		// Add the marble piece for current player
-		var player = player_turn();
 		if(player == 1)
 			piece.className = 'p1';
 		else if(player == 2)
@@ -183,15 +186,18 @@ function rotate(table, direction){
 	board_cover(true);
 	var time = table_rotate_fx(table,direction);
 	check_win();
-	if(game == 0) switch_player();
-	(function(){
-		board_cover(false);
-		if(game == 0 && game_type == 1) computer_action();
-	}).delay(time);
+	if(game == 0){
+		switch_player();
+		(function(){
+			board_cover(false);
+			if(game_type == 1) computer_action();
+		}).delay(time);
+	}
 }
 
 // Rotate move
 function move_rotate(table, direction){
+	move = 2;
 	var matrix = [];
 	var rotated_matrix = [];
 	var trs = $(table).getElementsByTagName('TR');
@@ -231,7 +237,7 @@ function update_history(move_type){
 	// 1. history index is EVEN (0,2,4...) and the move is PLACE (c)
 	// 2. history index is ODD (1,3,5...) and the move is ROTATE (t)
 	if((last_index%2 == 0 && this_move == 'c') || (last_index%2 != 0 && this_move == 't'))
-		history_list.push('p' + player_turn() + '-' + move_type);
+		history_list.push('p' + player + '-' + move_type);
 	else{ // ERROR occurs!
 		board_cover(true);
 		display_status('Sorry, an error has occured. Please start a new game.');
@@ -245,29 +251,16 @@ function update_history(move_type){
 
 // Switch players
 function switch_player(){
-	var player1label_effect = new Fx.Style('player-1-label', 'font-size', {duration: 500, unit: 'em'});
-	var player2label_effect = new Fx.Style('player-2-label', 'font-size', {duration: 500, unit: 'em'});
-
-	var player = player_turn();
 	if(player == 1){
-		$('player-2').checked = true;
-		player1label_effect.start(1.2);
-		player2label_effect.start(4);
+		player = 2;
+		$('player-2-label').addClass('current');
+		$('player-1-label').removeClass('current');
 	}
 	else if(player == 2){
-		$('player-1').checked = true;
-		player1label_effect.start(4);
-		player2label_effect.start(1.2);
+		player = 1;
+		$('player-1-label').addClass('current');
+		$('player-2-label').removeClass('current');
 	}
-}
-
-// Get player's turn
-function player_turn(){
-	if($('player-1').checked == true)
-		return 1;
-	else if($('player-2').checked == true)
-		return 2;
-	return 0;
 }
 
 // Table rotation effects
@@ -331,14 +324,14 @@ function generate_history(){
 		for(var i=0, j=h ; i<h, j>0 ; i++, j--){
 			var item = history_list[i];
 			if(item){
-				var player = 'Player' + item.substring(1,2);
+				var p = 'Player' + item.substring(1,2);
 				var action_1 = item.substring(3,4);
 				var action_2 = item.substring(4,5);
 				var action_3 = item.substring(5,6);
 				var player_action;
 
 				if(action_1 == 'c'){
-					player_action = 'Placed a marble on space ( row ' + (action_2.toInt()+1) + ', column ' + (action_3.toInt()+1) + ' )';
+					player_action = 'Placed a marble on space ( column ' + (action_2.toInt()+1) + ', row ' + (action_3.toInt()+1) + ' )';
 				}
 				else if(action_1 == 't'){
 					player_action = 'Rotated sub-board ' + action_2 + ' to the ';
@@ -348,7 +341,7 @@ function generate_history(){
 						player_action += 'right ( clockwise )';
 				}
 
-				$('history-list').innerHTML += '<li>' + player + ' : ' + player_action + '.</li>';
+				$('history-list').innerHTML += '<li>' + p + ' : ' + player_action + '.</li>';
 			}
 		}
 }
@@ -356,15 +349,16 @@ function generate_history(){
 // Undo last move
 function undo(){
 	var last_action = history_list.getLast();
+	var prev_game;
 
 	if(game_type == 0 && last_action){
 		$('undo-link').addClass('disabled');
-		var player = last_action.substring(0,2);
 		var action_string = last_action.substring(3);
 		var action = action_string.substring(0,1);
 
 		if(game>0){
 			game = 0;
+			prev_game = 1;
 			board_cover(false);
 			for(var m=0; m<6; m++)
 				for(var n=0; n<6; n++)
@@ -383,7 +377,7 @@ function undo(){
 
 			move_rotate(t, r_d);
 			var time = table_rotate_fx(t,r_d);
-			switch_player();
+			if(prev_game != 1) switch_player();
 			(function(){
 				rotate_arrow_fx(1);
 				$('undo-link').removeClass('disabled');
@@ -490,7 +484,7 @@ function check_5marbles(x,y, direction){
 
 				if(valid)
 					for(var j=y, k=x; j<y+5, k<x+5; j++, k++)
-						$('c'+k+j).addClass('win');
+						$('c'+j+k).addClass('win');
 				break;
 
 			case 'r-diagonal':
@@ -505,7 +499,7 @@ function check_5marbles(x,y, direction){
 
 				if(valid)
 					for(var j=y, k=x; j<y+5, k>x-5; j++, k--)
-						$('c'+k+j).addClass('win');
+						$('c'+j+k).addClass('win');
 				break;
 		}
 	}
@@ -549,7 +543,6 @@ function display_status(text,state){
 
 // Computer action
 function computer_action(){
-	var player = player_turn();
 	var valid_move;
 	var TIME = 1000;
 
@@ -590,21 +583,19 @@ function computer_action(){
 
 				if(valid_move && game == 0)
 					(function(){
+						var t = 't' + response.substring(2,3);
+						var d = response.substring(3,4);
+//						var t = 't' + $random(1,4);
+//						var d = $random(0,1) ? 'l' : 'r';
+						move_rotate(t,d);
+						update_history(t+d);
+						var time = table_rotate_fx(t,d);
+						check_win();
 						if(game == 0){
-							var t = 't' + response.substring(2,3);
-							var d = response.substring(3,4);
-//							var t = 't' + $random(1,4);
-//							var d = $random(0,1) ? 'l' : 'r';
-							move_rotate(t,d);
-							update_history(t+d);
-							var time = table_rotate_fx(t,d);
-							check_win();
-							if(game == 0) switch_player();
+							switch_player();
 							(function(){
-								if(game == 0){
-									board_cover(false);
-									if(game_type == 2) computer_action();
-								}
+								if(game_type == 2) computer_action();
+								else board_cover(false);
 							}).delay(time);
 						}
 					}).delay(TIME,response);
