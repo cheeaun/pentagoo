@@ -14,14 +14,19 @@ switch($level)
 {
 	case '0':
 		include_once('ai_0.php'); // Easiest AI - Random
+		break;
 	case '1':
 		include_once('ai_1.php'); // Easy
+		break;
 	case '2':
 		include_once('ai_2.php'); // Medium
+		break;
 	case '3':
 		include_once('ai_3.php'); // Hard
+		break;
 	case '4':
 		include_once('ai_4.php'); // God-like
+		break;
 }
 
 echo $x.$y.$t.$d; // OUTPUT!
