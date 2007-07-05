@@ -556,12 +556,12 @@ function computer_action(){
 			else matrix += '0';
 		}
 
-	$('debug1').innerHTML = matrix;
+//	$('debug1').innerHTML = matrix;
 
 	var ajax_ai = new Ajax('pentagoo_ai.php?m=' + matrix + '&p=' + player,
 	{
 		method: 'get',
-		update: $('debug'),
+//		update: $('debug'),
 		onComplete: function(response){
 			(function(){
 				var x = response.substring(0,1);
