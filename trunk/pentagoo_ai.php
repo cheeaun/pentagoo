@@ -45,19 +45,10 @@ for($m = 0; $m < 6; ++$m)
 switch($level)
 {
 	case '0':
-		include_once('ai_0.php'); // Easiest AI - Random
+		include_once('ai\ai_0.php'); // AI - Random
 		break;
 	case '1':
-		include_once('ai_1.php'); // Easy
-		break;
-	case '2':
-		include_once('ai_2.php'); // Medium
-		break;
-	case '3':
-		include_once('ai_3.php'); // Hard
-		break;
-	case '4':
-		include_once('ai_4.php'); // God-like
+		include_once('ai\ai_1.php'); // AI - Minimax
 		break;
 }
 
