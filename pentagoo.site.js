@@ -3,6 +3,7 @@ var move; // 1: place ; 2: rotate
 var game; // 0: not game yet ; 1: player 1 wins ; 2: player 2 wins ; 3: player 1 and 2 wins ; 4: draw
 var game_type; // 0: human VS human ; 1: human VS computer (vice versa) ; 2: computer VS computer
 var player; // 1: player 1 ; 2: player 2
+var computer_level;
 
 // Event load
 window.addEvent('load', function() {
@@ -124,7 +125,7 @@ function newgame(){
 	$('player-1-type').setHTML('Human');
 	$('player-2-type').setHTML('Human');
 
-
+	// Player selection
 	if($('p1-c-l').checked == true && $('p2-c-l').checked == true){
 		game_type = 2;
 		computer_action();
@@ -143,6 +144,11 @@ function newgame(){
 	else{
 		game_type = 0;
 	}
+
+	// Computer level selection
+	if($('c-1-l').checked == true) computer_level = 1;
+	else if($('c-2-l').checked == true) computer_level = 2;
+	else computer_level = 0;
 }
 
 // Place marble
@@ -558,7 +564,7 @@ function computer_action(){
 
 //	$('debug1').innerHTML = matrix;
 
-	var ajax_ai = new Ajax('pentagoo_ai.php?m=' + matrix + '&p=' + player,
+	var ajax_ai = new Ajax('pentagoo_ai.php?m=' + matrix + '&p=' + player + '&l=' + computer_level,
 	{
 		method: 'get',
 //		update: $('debug'),
