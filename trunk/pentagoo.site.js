@@ -563,7 +563,6 @@ function computer_action(){
 		}
 
 //	$('debug1').innerHTML = matrix;
-
 	var ajax_ai = new Ajax('pentagoo_ai.php?m=' + matrix + '&p=' + player + '&l=' + computer_level,
 	{
 		method: 'get',

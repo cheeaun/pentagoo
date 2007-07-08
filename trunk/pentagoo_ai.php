@@ -1,5 +1,4 @@
 <?
-// Get parameters
 $matrix = $_GET['m'];
 $player = $_GET['p'];
 $level = $_GET['l'];
@@ -38,16 +37,17 @@ if (!function_exists("str_split"))
 
 // Convert matrix string to array
 $matrix_arr = str_split($matrix);
-for($m = 0; $m < 6; ++$m)
-	for($n = 0; $n < 6 ; ++$n)
-		$matrix_array[$m][$n] = array_shift($matrix_arr);
+$matrix_arr1 = $matrix_arr;
+for($c = 0; $c < 6; ++$c)
+	for($r = 0; $r < 6 ; ++$r)
+		$matrix_arr2[$c][$r] = array_shift($matrix_arr);
 
 switch($level)
 {
 	case '0':
 		include_once('ai\ai_0.php'); // AI - Random
 		break;
-	case '1':
+	default:
 		include_once('ai\ai_1.php'); // AI - Minimax
 		break;
 }
