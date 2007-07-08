@@ -146,9 +146,9 @@ function newgame(){
 	}
 
 	// Computer level selection
-	if($('c-1-l').checked == true) computer_level = 1;
-	else if($('c-2-l').checked == true) computer_level = 2;
-	else computer_level = 0;
+	//if($('c-1-l').checked == true) computer_level = 1;
+	//else if($('c-2-l').checked == true) computer_level = 2;
+	//else computer_level = 0;
 }
 
 // Place marble
@@ -563,6 +563,7 @@ function computer_action(){
 		}
 
 //	$('debug1').innerHTML = matrix;
+computer_level = 1;
 	var ajax_ai = new Ajax('pentagoo_ai.php?m=' + matrix + '&p=' + player + '&l=' + computer_level,
 	{
 		method: 'get',
