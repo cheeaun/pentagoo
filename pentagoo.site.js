@@ -125,6 +125,13 @@ function newgame(){
 	$('player-1-type').setHTML('Human');
 	$('player-2-type').setHTML('Human');
 
+	// Computer level selection
+	if($('c-1-l').checked == true) computer_level = 1;
+	else if($('c-2-l').checked == true) computer_level = 2;
+	else if($('c-3-l').checked == true) computer_level = 3;
+	else if($('c-4-l').checked == true) computer_level = 4;
+	else computer_level = 0;
+
 	// Player selection
 	if($('p1-c-l').checked == true && $('p2-c-l').checked == true){
 		game_type = 2;
@@ -144,11 +151,6 @@ function newgame(){
 	else{
 		game_type = 0;
 	}
-
-	// Computer level selection
-	//if($('c-1-l').checked == true) computer_level = 1;
-	//else if($('c-2-l').checked == true) computer_level = 2;
-	//else computer_level = 0;
 }
 
 // Place marble
@@ -563,8 +565,8 @@ function computer_action(){
 		}
 
 //	$('debug1').innerHTML = matrix;
-computer_level = 1;
-	var ajax_ai = new Ajax('pentagoo_ai.php?m=' + matrix + '&p=' + player + '&l=' + computer_level,
+
+	var ajax_ai = new Ajax('pentagoo_ai.php?m=' + matrix + '&p=' + player + '&ai=0&l=' + computer_level,
 	{
 		method: 'get',
 //		update: $('debug'),
