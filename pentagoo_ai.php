@@ -37,7 +37,6 @@ if (!function_exists("str_split"))
 
 // Convert matrix string to array
 $matrix_arr = str_split($matrix);
-$matrix_arr1 = $matrix_arr;
 for($c = 0; $c < 6; ++$c)
 	for($r = 0; $r < 6 ; ++$r)
 		$matrix_arr2[$c][$r] = array_shift($matrix_arr);
