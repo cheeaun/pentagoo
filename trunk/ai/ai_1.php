@@ -104,81 +104,80 @@ function rotate($subGridId, $dir, $matrix)
 	return $final_matrix;
 }
 
-function NumOfPossibleWins($curPlayer, $m)
+function NumOfPossibleWins($c, $m) // To calculate value for current player, $c = opponent player id
 {
 	$count = 32;
-	$o = ($curPlayer == '1') ? '2' : '1'; // the opponent player
 	
 	// check 5, \
-	if ($m[0][0] == $o || $m[1][1] == $o || $m[2][2] == $o || $m[3][3] == $o || $m[4][4] == $o)
+	if ($m[0][0] == $c || $m[1][1] == $c || $m[2][2] == $c || $m[3][3] == $c || $m[4][4] == $c)
 		--$count;
-	if ($m[1][1] == $o || $m[2][2] == $o || $m[3][3] == $o || $m[4][4] == $o || $m[5][5] == $o)
+	if ($m[1][1] == $c || $m[2][2] == $c || $m[3][3] == $c || $m[4][4] == $c || $m[5][5] == $c)
 		--$count;
-	if ($m[1][0] == $o || $m[2][1] == $o || $m[3][2] == $o || $m[4][3] == $o || $m[5][4] == $o)
+	if ($m[1][0] == $c || $m[2][1] == $c || $m[3][2] == $c || $m[4][3] == $c || $m[5][4] == $c)
 		--$count;
-	if ($m[0][1] == $o || $m[1][2] == $o || $m[2][3] == $o || $m[3][4] == $o || $m[4][5] == $o)
+	if ($m[0][1] == $c || $m[1][2] == $c || $m[2][3] == $c || $m[3][4] == $c || $m[4][5] == $c)
 		--$count;
 		
 	// check 5, /
-	if ($m[0][5] == $o || $m[1][4] == $o || $m[2][3] == $o || $m[3][2] == $o || $m[4][1] == $o)
+	if ($m[0][5] == $c || $m[1][4] == $c || $m[2][3] == $c || $m[3][2] == $c || $m[4][1] == $c)
 		--$count;
-	if ($m[1][4] == $o || $m[2][3] == $o || $m[3][2] == $o || $m[4][1] == $o || $m[5][0] == $o)
+	if ($m[1][4] == $c || $m[2][3] == $c || $m[3][2] == $c || $m[4][1] == $c || $m[5][0] == $c)
 		--$count;
-	if ($m[0][4] == $o || $m[1][3] == $o || $m[2][2] == $o || $m[3][1] == $o || $m[4][0] == $o)
+	if ($m[0][4] == $c || $m[1][3] == $c || $m[2][2] == $c || $m[3][1] == $c || $m[4][0] == $c)
 		--$count;
-	if ($m[1][5] == $o || $m[2][4] == $o || $m[3][3] == $o || $m[4][2] == $o || $m[5][1] == $o)
+	if ($m[1][5] == $c || $m[2][4] == $c || $m[3][3] == $c || $m[4][2] == $c || $m[5][1] == $c)
 		--$count;
 		
 	// check 5, |
-	if ($m[0][0] == $o || $m[1][0] == $o || $m[2][0] == $o || $m[3][0] == $o || $m[4][0] == $o)
+	if ($m[0][0] == $c || $m[1][0] == $c || $m[2][0] == $c || $m[3][0] == $c || $m[4][0] == $c)
 		--$count;
-	if ($m[1][0] == $o || $m[2][0] == $o || $m[3][0] == $o || $m[4][0] == $o || $m[5][0] == $o)
+	if ($m[1][0] == $c || $m[2][0] == $c || $m[3][0] == $c || $m[4][0] == $c || $m[5][0] == $c)
 		--$count;
-	if ($m[0][1] == $o || $m[1][1] == $o || $m[2][1] == $o || $m[3][1] == $o || $m[4][1] == $o)
+	if ($m[0][1] == $c || $m[1][1] == $c || $m[2][1] == $c || $m[3][1] == $c || $m[4][1] == $c)
 		--$count;
-	if ($m[1][1] == $o || $m[2][1] == $o || $m[3][1] == $o || $m[4][1] == $o || $m[5][1] == $o)
+	if ($m[1][1] == $c || $m[2][1] == $c || $m[3][1] == $c || $m[4][1] == $c || $m[5][1] == $c)
 		--$count;
-	if ($m[0][2] == $o || $m[1][2] == $o || $m[2][2] == $o || $m[3][2] == $o || $m[4][2] == $o)
+	if ($m[0][2] == $c || $m[1][2] == $c || $m[2][2] == $c || $m[3][2] == $c || $m[4][2] == $c)
 		--$count;
-	if ($m[1][2] == $o || $m[2][2] == $o || $m[3][2] == $o || $m[4][2] == $o || $m[5][2] == $o)
+	if ($m[1][2] == $c || $m[2][2] == $c || $m[3][2] == $c || $m[4][2] == $c || $m[5][2] == $c)
 		--$count;
-	if ($m[0][3] == $o || $m[1][3] == $o || $m[2][3] == $o || $m[3][3] == $o || $m[4][3] == $o)
+	if ($m[0][3] == $c || $m[1][3] == $c || $m[2][3] == $c || $m[3][3] == $c || $m[4][3] == $c)
 		--$count;
-	if ($m[1][3] == $o || $m[2][3] == $o || $m[3][3] == $o || $m[4][3] == $o || $m[5][3] == $o)
+	if ($m[1][3] == $c || $m[2][3] == $c || $m[3][3] == $c || $m[4][3] == $c || $m[5][3] == $c)
 		--$count;
-	if ($m[0][4] == $o || $m[1][4] == $o || $m[2][4] == $o || $m[3][4] == $o || $m[4][4] == $o)
+	if ($m[0][4] == $c || $m[1][4] == $c || $m[2][4] == $c || $m[3][4] == $c || $m[4][4] == $c)
 		--$count;
-	if ($m[1][4] == $o || $m[2][4] == $o || $m[3][4] == $o || $m[4][4] == $o || $m[5][4] == $o)
+	if ($m[1][4] == $c || $m[2][4] == $c || $m[3][4] == $c || $m[4][4] == $c || $m[5][4] == $c)
 		--$count;
-	if ($m[0][5] == $o || $m[1][5] == $o || $m[2][5] == $o || $m[3][5] == $o || $m[4][5] == $o)
+	if ($m[0][5] == $c || $m[1][5] == $c || $m[2][5] == $c || $m[3][5] == $c || $m[4][5] == $c)
 		--$count;
-	if ($m[1][5] == $o || $m[2][5] == $o || $m[3][5] == $o || $m[4][5] == $o || $m[5][5] == $o)
+	if ($m[1][5] == $c || $m[2][5] == $c || $m[3][5] == $c || $m[4][5] == $c || $m[5][5] == $c)
 		--$count;
 		
 	// check 5, -
-	if ($m[0][0] == $o || $m[0][1] == $o || $m[0][2] == $o || $m[0][3] == $o || $m[0][4] == $o)
+	if ($m[0][0] == $c || $m[0][1] == $c || $m[0][2] == $c || $m[0][3] == $c || $m[0][4] == $c)
 		--$count;
-	if ($m[0][1] == $o || $m[0][2] == $o || $m[0][3] == $o || $m[0][4] == $o || $m[0][5] == $o)
+	if ($m[0][1] == $c || $m[0][2] == $c || $m[0][3] == $c || $m[0][4] == $c || $m[0][5] == $c)
 		--$count;
-	if ($m[1][0] == $o || $m[1][1] == $o || $m[1][2] == $o || $m[1][3] == $o || $m[1][4] == $o)
+	if ($m[1][0] == $c || $m[1][1] == $c || $m[1][2] == $c || $m[1][3] == $c || $m[1][4] == $c)
 		--$count;
-	if ($m[1][1] == $o || $m[1][2] == $o || $m[1][3] == $o || $m[1][4] == $o || $m[1][5] == $o)
+	if ($m[1][1] == $c || $m[1][2] == $c || $m[1][3] == $c || $m[1][4] == $c || $m[1][5] == $c)
 		--$count;
-	if ($m[2][0] == $o || $m[2][1] == $o || $m[2][2] == $o || $m[2][3] == $o || $m[2][4] == $o)
+	if ($m[2][0] == $c || $m[2][1] == $c || $m[2][2] == $c || $m[2][3] == $c || $m[2][4] == $c)
 		--$count;
-	if ($m[2][1] == $o || $m[2][2] == $o || $m[2][3] == $o || $m[2][4] == $o || $m[2][5] == $o)
+	if ($m[2][1] == $c || $m[2][2] == $c || $m[2][3] == $c || $m[2][4] == $c || $m[2][5] == $c)
 		--$count;
-	if ($m[3][0] == $o || $m[3][1] == $o || $m[3][2] == $o || $m[3][3] == $o || $m[3][4] == $o)
+	if ($m[3][0] == $c || $m[3][1] == $c || $m[3][2] == $c || $m[3][3] == $c || $m[3][4] == $c)
 		--$count;
-	if ($m[3][1] == $o || $m[3][2] == $o || $m[3][3] == $o || $m[3][4] == $o || $m[3][5] == $o)
+	if ($m[3][1] == $c || $m[3][2] == $c || $m[3][3] == $c || $m[3][4] == $c || $m[3][5] == $c)
 		--$count;
-	if ($m[4][0] == $o || $m[4][1] == $o || $m[4][2] == $o || $m[4][3] == $o || $m[4][4] == $o)
+	if ($m[4][0] == $c || $m[4][1] == $c || $m[4][2] == $c || $m[4][3] == $c || $m[4][4] == $c)
 		--$count;
-	if ($m[4][1] == $o || $m[4][2] == $o || $m[4][3] == $o || $m[4][4] == $o || $m[4][5] == $o)
+	if ($m[4][1] == $c || $m[4][2] == $c || $m[4][3] == $c || $m[4][4] == $c || $m[4][5] == $c)
 		--$count;
-	if ($m[5][0] == $o || $m[5][1] == $o || $m[5][2] == $o || $m[5][3] == $o || $m[5][4] == $o)
+	if ($m[5][0] == $c || $m[5][1] == $c || $m[5][2] == $c || $m[5][3] == $c || $m[5][4] == $c)
 		--$count;
-	if ($m[5][1] == $o || $m[5][2] == $o || $m[5][3] == $o || $m[5][4] == $o || $m[5][5] == $o)
+	if ($m[5][1] == $c || $m[5][2] == $c || $m[5][3] == $c || $m[5][4] == $c || $m[5][5] == $c)
 		--$count;
 	
 	return $count;
@@ -190,49 +189,74 @@ function minimax($curPlayer, $oppPlayer, $matrix)
 	{
 		for ($r = 0; $r < 6; ++$r) // loop all the x positions
 		{
-			if ($matrix[$c][$r] == '0') // loop all the possible positions
+			if ($matrix[$c][$r] == '0') // loop all the empty positions
 			{
 				$matrix_tmp = $matrix;
 				$matrix_tmp[$c][$r] = $curPlayer; // place it there
 				
-				$curPlayerScore[$c][$r] = NumOfPossibleWins($curPlayer, $matrix_tmp); // count how many possible winning arrangement
+				$curPlayerScore[$c][$r] = NumOfPossibleWins($oppPlayer, $matrix_tmp); // count how many possible winning arrangement
 				
 				$oppPlayerScore[$c][$r] = 0;
-				for ($i = 1; $i <= 4; ++$i) // for all the possible ways that can turn by opponent
-				{
-					$posi_matrix[$i][0] = rotate($i, 'l', $matrix_tmp);
-					$tmp = NumOfPossibleWins($oppPlayer, $posi_matrix[$i][0]); // count how many possible winning arrangement
-					if ($tmp > $oppPlayerScore[$c][$r])
-						$oppPlayerScore[$c][$r] = $tmp;
-					
-					$posi_matrix[$i][1] = rotate($i, 'r', $matrix_tmp);
-					$tmp = NumOfPossibleWins($oppPlayer, $posi_matrix[$i][1]); // count how many possible winning arrangement
-					if ($tmp > $oppPlayerScore[$c][$r])
-						$oppPlayerScore[$c][$r] = $tmp;
-				}
+				
+				$tmp = NumOfPossibleWins($curPlayer, rotate(1, 'l', $matrix_tmp)); // count how many possible winning arrangement
+				if ($tmp > $oppPlayerScore[$c][$r])
+					$oppPlayerScore[$c][$r] = $tmp;
+				
+				$tmp = NumOfPossibleWins($curPlayer, rotate(1, 'r', $matrix_tmp)); // count how many possible winning arrangement
+				if ($tmp > $oppPlayerScore[$c][$r])
+					$oppPlayerScore[$c][$r] = $tmp;
+				
+				$tmp = NumOfPossibleWins($curPlayer, rotate(2, 'l', $matrix_tmp)); // count how many possible winning arrangement
+				if ($tmp > $oppPlayerScore[$c][$r])
+					$oppPlayerScore[$c][$r] = $tmp;
+				
+				$tmp = NumOfPossibleWins($curPlayer, rotate(2, 'r', $matrix_tmp)); // count how many possible winning arrangement
+				if ($tmp > $oppPlayerScore[$c][$r])
+					$oppPlayerScore[$c][$r] = $tmp;
+				
+				$tmp = NumOfPossibleWins($curPlayer, rotate(3, 'l', $matrix_tmp)); // count how many possible winning arrangement
+				if ($tmp > $oppPlayerScore[$c][$r])
+					$oppPlayerScore[$c][$r] = $tmp;
+				
+				$tmp = NumOfPossibleWins($curPlayer, rotate(3, 'r', $matrix_tmp)); // count how many possible winning arrangement
+				if ($tmp > $oppPlayerScore[$c][$r])
+					$oppPlayerScore[$c][$r] = $tmp;
+				
+				$tmp = NumOfPossibleWins($curPlayer, rotate(4, 'l', $matrix_tmp)); // count how many possible winning arrangement
+				if ($tmp > $oppPlayerScore[$c][$r])
+					$oppPlayerScore[$c][$r] = $tmp;
+				
+				$tmp = NumOfPossibleWins($curPlayer, rotate(4, 'r', $matrix_tmp)); // count how many possible winning arrangement
+				if ($tmp > $oppPlayerScore[$c][$r])
+					$oppPlayerScore[$c][$r] = $tmp;
 				
 				$min_max_val[$c][$r] = $curPlayerScore[$c][$r] - $oppPlayerScore[$c][$r];
 			}
-			else
-				$curPlayerScore[$c][$r] = $oppPlayerScore[$c][$r] = $min_max_val[$c][$r] = -999;
 		}
 	}
 	return $min_max_val;
 }
 
 $oppPlayer = ($player == '1') ? '2' : '1'; // the opponent player
-
 $lala = minimax($player, $oppPlayer, $matrix_arr2);
 
 for ($c = 0; $c < 6; ++$c) // loop all the y positions
+	for ($r = 0; $r < 6; ++$r) // loop all the x positions
+		if ($matrix_arr2[$c][$r] != '0')
+			$lala[$c][$r] = -99999;
+
+$breakFlag = false;
+for ($c = 0; $c < 6 && $breakFlag == false; ++$c) // loop all the y positions
 {
 	for ($r = 0; $r < 6; ++$r) // loop all the x positions
 	{
-		if ($lala[$c][$r] != -999)
+		if ($lala[$c][$r] != -99999)
 		{
 			$maxVal = $lala[$c][$r];
 			$maxC = $c;
 			$maxR = $r;
+			$breakFlag = true;
+			break;
 		}
 	}
 }
@@ -241,13 +265,115 @@ for ($c = 0; $c < 6; ++$c) // loop all the y positions
 {
 	for ($r = 0; $r < 6; ++$r) // loop all the x positions
 	{
-		if ($lala[$c][$r] > $maxVal)
+		if ($lala[$c][$r] > $maxVal && $lala[$c][$r] != -99999)
 		{
 			$maxVal = $lala[$c][$r];
 			$maxC = $c;
 			$maxR = $r;
 		}
 	}
+}
+
+$i = 0;
+for ($c = 0; $c < 6; ++$c) // loop all the y positions
+{
+	for ($r = 0; $r < 6; ++$r) // loop all the x positions
+	{
+		if ($lala[$c][$r] == $maxVal)
+		{
+			$poss_c[$i] = $c;
+			$poss_r[$i] = $r;
+			++$i;
+		}
+	}
+}
+
+mt_srand();
+$y = mt_rand(0, count($poss_c) - 1);
+$x = mt_rand(0, count($poss_r) - 1);
+
+$y = $poss_c[$y];
+$x = $poss_r[$x];
+
+$y = $maxC;
+$x = $maxR;
+
+function minimax2($curPlayer, $oppPlayer, $matrix)
+{
+	$posi_matrix = rotate(1, 'l', $matrix);
+	$min_max_val[0] = NumOfPossibleWins($oppPlayer, $posi_matrix) - NumOfPossibleWins($curPlayer, $posi_matrix);
+	
+	$posi_matrix = rotate(1, 'r', $matrix);
+	$min_max_val[1] = NumOfPossibleWins($oppPlayer, $posi_matrix) - NumOfPossibleWins($curPlayer, $posi_matrix);
+	
+	$posi_matrix = rotate(2, 'l', $matrix);
+	$min_max_val[2] = NumOfPossibleWins($oppPlayer, $posi_matrix) - NumOfPossibleWins($curPlayer, $posi_matrix);
+	
+	$posi_matrix = rotate(2, 'r', $matrix);
+	$min_max_val[3] = NumOfPossibleWins($oppPlayer, $posi_matrix) - NumOfPossibleWins($curPlayer, $posi_matrix);
+	
+	$posi_matrix = rotate(3, 'l', $matrix);
+	$min_max_val[4] = NumOfPossibleWins($oppPlayer, $posi_matrix) - NumOfPossibleWins($curPlayer, $posi_matrix);
+	
+	$posi_matrix = rotate(3, 'r', $matrix);
+	$min_max_val[5] = NumOfPossibleWins($oppPlayer, $posi_matrix) - NumOfPossibleWins($curPlayer, $posi_matrix);
+	
+	$posi_matrix = rotate(4, 'l', $matrix);
+	$min_max_val[6] = NumOfPossibleWins($oppPlayer, $posi_matrix) - NumOfPossibleWins($curPlayer, $posi_matrix);
+	
+	$posi_matrix = rotate(4, 'r', $matrix);
+	$min_max_val[7] = NumOfPossibleWins($oppPlayer, $posi_matrix) - NumOfPossibleWins($curPlayer, $posi_matrix);
+
+	return $min_max_val;
+}
+
+$matrix_arr2[$y][$x] = $player; // place it
+
+$lala2 = minimax2($player, $oppPlayer, $matrix_arr2);
+
+$maxLala2 = $lala2[0];
+
+for ($i = 1; $i < 8; ++$i)
+	if ($lala2[$i] > $maxLala2)
+		$maxLala2 = $lala2[$i];
+
+switch($maxLala2)
+{
+case 0:
+	$t = 1;
+	$d = 'l';
+	break;
+case 1:
+	$t = 1;
+	$d = 'r';
+	break;
+case 2:
+	$t = 2;
+	$d = 'l';
+	break;
+case 3:
+	$t = 2;
+	$d = 'r';
+	break;
+case 4:
+	$t = 3;
+	$d = 'l';
+	break;
+case 5:
+	$t = 3;
+	$d = 'r';
+	break;
+case 6:
+	$t = 4;
+	$d = 'l';
+	break;
+case 7:
+	$t = 4;
+	$d = 'r';
+	break;
+default:
+	$t = 4;
+	$d = 'r';
 }
 
 /*
@@ -261,9 +387,6 @@ do
 while($matrix_arr2[$y][$x] != 0);
 */
 
-$y = $maxC;
-$x = $maxR;
-
-$t = mt_rand(1,4);
-$d = mt_rand(0,1) ? 'l' : 'r';
+//$t = mt_rand(1,4);
+//$d = mt_rand(0,1) ? 'l' : 'r';
 ?>
