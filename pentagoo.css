@@ -4,6 +4,11 @@ font-size: .75em;
 font-family: "century gothic", arial, sans-serif;
 }
 
+input,select{
+font-size: .9em;
+font-family: "century gothic", arial, sans-serif;
+}
+
 h1{
 font-weight: normal;
 margin-bottom: 0;
@@ -154,7 +159,7 @@ width: 200px;
 }
 
 .players-setup li label{
-padding: .5em 1em;
+padding: .5em;
 }
 
 /* BOARD */
@@ -299,30 +304,6 @@ top: 20px;
 background-position: bottom right;
 }
 
-/* LABELS *
-
-#player-labels span{
-position: absolute;
-bottom: 10px;
-}
-
-#player-labels span input{
-visibility: hidden;
-position: absolute;
-}
-
-#player-1-label{
-left: 10px;
-background: transparent url(images/white-piece.png) left center no-repeat;
-padding: 20px 0 20px 50px;
-}
-
-#player-2-label{
-right: 10px;
-background: transparent url(images/black-piece.png) right center no-repeat;
-padding: 20px 50px 20px 0;
-}
-*/
 #player-labels li{
 position: absolute;
 top: 12em;
