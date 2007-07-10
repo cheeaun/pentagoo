@@ -395,3 +395,11 @@ width: 500px;
 padding: 6px 10px;
 text-align: center;
 }
+
+/* DIGG BUTTON */
+
+#digg-button{
+position: absolute;
+top: 1em;
+right: 1em;
+}
