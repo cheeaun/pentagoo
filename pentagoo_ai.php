@@ -37,6 +37,7 @@ if (!function_exists("str_split"))
 
 // Convert matrix string to array
 $matrix_arr = str_split($matrix);
+$matrix_arr1 = $matrix_arr;
 for($c = 0; $c < 6; ++$c)
 	for($r = 0; $r < 6 ; ++$r)
 		$matrix_arr2[$c][$r] = array_shift($matrix_arr);
@@ -46,10 +47,17 @@ switch($level)
 	case '0':
 		include_once('ai\ai_0.php'); // AI - Random
 		break;
-	default:
+	case '1':
 		include_once('ai\ai_1.php'); // AI - Minimax
 		break;
+	case '2':
+		include_once('ai\ai_2.php'); // AI - Minimax
 }
 
-echo $x.$y.$t.$d; // OUTPUT!
+echo $x.$y.$t.$d.' - <font size="1">'; // OUTPUT!
+
+for($i = 0; $i < 36; ++$i)
+	echo $matrix_arr1[$i];
+
+echo ' - </font>';
 ?>
