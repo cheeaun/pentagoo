@@ -576,7 +576,7 @@ function computer_action(){
 	var ajax_ai = new Ajax('pentagoo_ai.php?m=' + matrix + '&p=' + player + '&ai=0&l=' + computer_level[player-1] + '&_t_=' + $time(),
 	{
 		method: 'get',
-//		update: $('debug'),
+		update: $('debug'),
 		onComplete: function(response){
 			(function(){
 				var x = response.substring(0,1);
