@@ -3,10 +3,10 @@ var move; // 1: place ; 2: rotate
 var game; // 0: not game yet ; 1: player 1 wins ; 2: player 2 wins ; 3: player 1 and 2 wins ; 4: draw
 var game_type; // 0: human VS human ; 1: human VS computer (vice versa) ; 2: computer VS computer
 var player; // 1: player 1 ; 2: player 2
-var computer_level;
+var computer_level; // computer levels
 
 // Event load
-window.addEvent('load', function() {
+window.addEvent('domready', function() {
 	generate_markup();
 	initial();
 	preload_stuff();
@@ -36,6 +36,7 @@ function initial(){
 	game = 0;
 	game_type = 0;
 	history_list = [];
+	computer_level = [];
 	generate_history();
 	$('undo-link').addClass('disabled');
 
@@ -72,7 +73,6 @@ function preload_stuff(){
 	new Asset.images(images, {
 		onProgress: function(i){
 			display_status('Loading (' + (i+1) + ' / ' + images.length + ')', true);
-//			$('debug').innerHTML = (i+1) + ' / ' + images.length;
 		},
 		onComplete: function(){
 			display_status('Done.');
@@ -126,25 +126,31 @@ function newgame(){
 	$('player-2-type').setHTML('Human');
 
 	// Computer level selection
-	if($('c-1-l').checked == true) computer_level = 1;
+/*	if($('c-1-l').checked == true) computer_level = 1;
 	else if($('c-2-l').checked == true) computer_level = 2;
 	else if($('c-3-l').checked == true) computer_level = 3;
 	else if($('c-4-l').checked == true) computer_level = 4;
 	else computer_level = 0;
+*/
+	
 
 	// Player selection
 	if($('p1-c-l').checked == true && $('p2-c-l').checked == true){
 		game_type = 2;
+		computer_level[0] = $('p1-cl').selectedIndex;
+		computer_level[1] = $('p2-cl').selectedIndex;
 		computer_action();
 		$('player-1-type').setHTML('Computer');
 		$('player-2-type').setHTML('Computer');
 	}
 	else if($('p1-c-l').checked == true){
 		game_type = 1;
+		computer_level[0] = ('p1-cl').value;
 		computer_action();
 		$('player-1-type').setHTML('Computer');
 	}
 	else if($('p2-c-l').checked == true){
+		computer_level[1] = ('p2-cl').value;
 		game_type = 1;
 		$('player-2-type').setHTML('Computer');
 	}
@@ -565,8 +571,9 @@ function computer_action(){
 		}
 
 //	$('debug1').innerHTML = matrix;
+	$('debug1').innerHTML = player + ' ' + computer_level[player-1];
 
-	var ajax_ai = new Ajax('pentagoo_ai.php?m=' + matrix + '&p=' + player + '&ai=0&l=' + computer_level,
+	var ajax_ai = new Ajax('pentagoo_ai.php?m=' + matrix + '&p=' + player + '&ai=0&l=' + computer_level[player-1],
 	{
 		method: 'get',
 //		update: $('debug'),
