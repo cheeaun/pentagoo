@@ -145,12 +145,12 @@ function newgame(){
 	}
 	else if($('p1-c-l').checked == true){
 		game_type = 1;
-		computer_level[0] = ('p1-cl').value;
+		computer_level[0] = $('p1-cl').selectedIndex;
 		computer_action();
 		$('player-1-type').setHTML('Computer');
 	}
 	else if($('p2-c-l').checked == true){
-		computer_level[1] = ('p2-cl').value;
+		computer_level[1] = $('p2-cl').selectedIndex;
 		game_type = 1;
 		$('player-2-type').setHTML('Computer');
 	}
