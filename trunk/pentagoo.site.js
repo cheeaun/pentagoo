@@ -571,10 +571,9 @@ function computer_action(){
 		}
 
 	//$('debug1').innerHTML = matrix;
-	$('debug1').innerHTML = player + ' ' + computer_level[player-1];
+	//$('debug1').innerHTML = player + ' ' + computer_level[player-1];
 
-	var lEpoch = (new Date()).getTime();
-	var ajax_ai = new Ajax('pentagoo_ai.php?m=' + matrix + '&p=' + player + '&ai=0&l=' + computer_level[player-1] + '&_t_=' + lEpoch,
+	var ajax_ai = new Ajax('pentagoo_ai.php?m=' + matrix + '&p=' + player + '&ai=0&l=' + computer_level[player-1] + '&_t_=' + $time(),
 	{
 		method: 'get',
 //		update: $('debug'),
