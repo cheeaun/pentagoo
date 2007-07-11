@@ -582,17 +582,7 @@ function computer_action(){
 			(function(){
 				var x = response.substring(0,1);
 				var y = response.substring(1,2);
-/*
-				do{
-					var x = $random(0,5);
-					var y = $random(0,5);
-					if(valid_move = move_place($('c'+y+x))){
-						update_history($('c'+y+x).getProperty('id'));
-						check_win();
-					}
-				}
-				while(!valid_move);
-*/
+
 				valid_move = move_place($('c'+y+x));
 				update_history($('c'+y+x).getProperty('id'));
 				check_win();
@@ -601,8 +591,7 @@ function computer_action(){
 					(function(){
 						var t = 't' + response.substring(2,3);
 						var d = response.substring(3,4);
-//						var t = 't' + $random(1,4);
-//						var d = $random(0,1) ? 'l' : 'r';
+
 						move_rotate(t,d);
 						update_history(t+d);
 						var time = table_rotate_fx(t,d);
