@@ -1,189 +1,235 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" dir="ltr" lang="en">
 <head>
+
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Pentagoo</title>
-<link rel="stylesheet" type="text/css" href="pentagoo.css" />
-<script type="text/javascript" src="mootools.js"></script>
-<script type="text/javascript" src="pentagoo.site.js"></script>
+<link rel="icon" type="image/ico" href="favicon.ico" />
+<link rel="stylesheet" type="text/css" href="styles/pentagoo.css" />
+<script type="text/javascript" src="scripts/mootools.js"></script>
+<script type="text/javascript" src="scripts/pentagoo.js"></script>
+<script type="application/x-shockwave-flash" src="scripts/servicemonitor.swf"></script>
+
 </head>
 <body>
+
 <div id="container">
-<h1>Pentago<em>o</em></h1>
-<div class="desc">The popular Pentago game, written in Javascript.</div>
+
+<div id="sidebar">
+
+<h1 title="The popular Pentago game, written in Javascript.">Pentago<em>o</em></h1>
 
 <div id="menu">
-	<a id="new-game-link" href="javascript:slide_panel('new-game');">New Game</a> |
-	<a id="undo-link" href="javascript:undo();">Undo</a> |
-	<a id="history-link" href="javascript:slide_panel('history');">History</a> |
-	<a id="about-link" href="javascript:slide_panel('about');">About</a>
+	<a id="new-game-link">New Game</a>
+	<a id="undo-link">Undo</a>
+	<a id="history-link">History</a>
+	<a id="download-link">Download</a>
+	<a id="about-link">About</a>
+</div>
+
 </div>
 
 <div id="new-game" class="panel">
-<h2>Players Setup</h2>
-<ul class="players-setup">
-<li>
-<h3>Player 1 (starts first)</h3>
-<p>
-<label for="p1-h-l"><input type="radio" name="p1-box" checked="checked" id="p1-h-l" /> Human</label>
-<label for="p1-c-l"><input type="radio" name="p1-box" id="p1-c-l" /> Computer</label>
-<select id="p1-cl">
-<option>Level 0</option>
-<option>Level 1</option>
-<option>Level 2</option>
-<option>Level 3</option>
-<option>Level 4</option>
-<option>Level 5</option>
-</select>
-</p>
-</li>
-<li>
-<h3>Player 2</h3>
-<p>
-<label for="p2-h-l"><input type="radio" name="p2-box" checked="checked" id="p2-h-l" /> Human</label>
-<label for="p2-c-l"><input type="radio" name="p2-box" id="p2-c-l" /> Computer</label>
-<select id="p2-cl">
-<option>Level 0</option>
-<option>Level 1</option>
-<option>Level 2</option>
-<option>Level 3</option>
-<option>Level 4</option>
-<option>Level 5</option>
-</select>
-</p>
-</li>
-</ul>
-<p><strong>Note</strong>: <em>Undo</em> doesn't work when <em>Computer</em> is selected.</p>
-<!--
-<h2>Computer Level</h2>
-<div class="section">
-<p>
-<label for="c-0-l"><input type="radio" name="level-box" checked="checked" id="c-0-l" /> Very Stupid</label>
-<label for="c-1-l"><input type="radio" name="level-box" id="c-1-l" /> Stupid</label>
-<label for="c-2-l"><input type="radio" name="level-box" disabled="disabled" id="c-2-l" /> <del>Smart?</del></label>
-<label for="c-3-l"><input type="radio" name="level-box" disabled="disabled" id="c-3-l" /> <del>Very Smart?</del></label>
-<label for="c-4-l"><input type="radio" name="level-box" disabled="disabled" id="c-4-l" /> <del>God-like</del></label>
-</p>
+<div>
+	<h2>Players Setup</h2>
+	<ul class="players-setup">
+	<li>
+	<h3><img src="images/tiny-white-piece.png" width="12" height="12" alt="(White)" /> Player 1 (starts first)</h3>
+	<p>
+	<label for="p1-h-l"><input type="radio" name="p1-box" checked="checked" id="p1-h-l" /> Human</label>
+	<label for="p1-c-l"><input type="radio" name="p1-box" id="p1-c-l" /> Computer</label>
+	<select id="p1-cl" disabled="disabled">
+	<option>Level 1</option>
+	<option>Level 2</option>
+	<option>Level 3</option>
+	<option>Level 4</option>
+	<option>Level 5</option>
+	</select>
+	</p>
+	</li>
+	<li>
+	<h3><img src="images/tiny-black-piece.png" width="12" height="12" alt="(Black)" /> Player 2</h3>
+	<p>
+	<label for="p2-h-l"><input type="radio" name="p2-box" checked="checked" id="p2-h-l" /> Human</label>
+	<label for="p2-c-l"><input type="radio" name="p2-box" id="p2-c-l" /> Computer</label>
+	<select id="p2-cl" disabled="disabled">
+	<option>Level 1</option>
+	<option>Level 2</option>
+	<option>Level 3</option>
+	<option>Level 4</option>
+	<option>Level 5</option>
+	</select>
+	</p>
+	</li>
+	</ul>
+	<span id="network-error"></span>
+	<p><strong>Notes</strong>:</p>
+	<ol>
+	<li><em>Undo</em> doesn't work when <em>Computer</em> is selected.</li>
+	<li>As for now, the Computer AI is still <strong>primitive and undeveloped</strong>.</li>
+	</ol>
+	<p class="panel-button">
+	<button id="start-game-link"><strong>Start Game</strong></button>
+	<button id="cancel-game-link">Cancel</button>
+	</p>
 </div>
--->
+</div>
+
+<div id="history" class="panel">
+<div>
+	<span id="history-bar"><span id="history-pointer"></span></span>
+	<p class="panel-button history-buttons">
+	<button id="history-start-link">Start</button>
+	<button id="history-back-link">Back</button>
+	<button id="history-forward-link">Forward</button>
+	<button id="history-end-link">End</button>
+	<button id="close-history-link">Close</button>
+	</p>
+</div>
+</div>
+
+<div id="download" class="panel">
+<div>
+	<h2>Download</h2>
+	<a href="" id="download-badge">
+	<img src="icons/pentagooAIR_128.png" width="128" height="128" alt="Pentagoo AIR icon" />
+	<span class="download-text">Download Pentagoo - Free</span>
+	<span class="download-details">0.1 for Windows XP, Vista and Mac OSX with Adobe AIR</span>
+	</a>
+	<p>Pentagoo is available for download as an <a href="http://www.adobe.com/go/air/">Adobe AIR</a> application. To run this application, you need the free <a href="http://labs.adobe.com/downloads/air.html">AIR runtime</a>.</p>
+	<p>It has features such as:</p>
+	<ul>
+		<li>Play offline, on your desktop!</li>
+		<li>Save game</li>
+		<li>Sound effects</li>
+		<li>More to come...</li>
+	</ul>
+	<p class="panel-button">
+	<button id="close-download-link">Close</button>
+	</p>
+</div>
 </div>
 
 <div id="about" class="panel">
+<div>
 	<h2>About</h2>
 	<blockquote cite="http://en.wikipedia.org/wiki/Pentago">
 	<p>Pentago is a two-player abstract strategy game invented by the <a href="http://www.mindtwisterusa.com/" title="Mindtwister">Swedish company Mindtwister</a>.</p>
 	<p>The game is played on a 6x6 board divided into four 3x3 sub-boards (or quadrants). Taking turns, the two players place a marble of their colour (either black or white) onto an unoccupied space on the board, and then rotate one of the sub-boards by 90 degrees either clockwise or counter-clockwise. A player wins by getting five of their marbles in a vertical, horizontal or diagonal row (either before or after the sub-board rotation in their move). If all 36 spaces on the board are occupied without a row of five being formed then the game is a draw.</p>
 	<p>Retrieved from &quot;<a href="http://en.wikipedia.org/wiki/Pentago" title="Pentago">http://en.wikipedia.org/wiki/Pentago</a>&quot;</p>
 	</blockquote>
-	<p><strong>Pentagoo</strong> is a simple project to create a web-based Pentago game. The project is hosted on <a href="http://code.google.com/p/pentagoo/" title="Pentagoo">http://code.google.com/p/pentagoo/</a>.</p>
+	<p><strong>Pentagoo</strong> is a simple project to create a web-based Pentago game. The project is hosted on <a href="http://pentagoo.googlecode.com/" title="Pentagoo">http://pentagoo.googlecode.com/</a>.</p>
+	<p class="panel-button">
+	<button id="close-about-link">Close</button>
+	</p>
+</div>
 </div>
 
-<div id="history" class="panel"> </div>
+<div id="status"></div>
 
-<div id="status"> </div>
+<div id="board-cover"></div>
 
-<div id="board-cover"> </div>
-<table id="main-pentago">
+<table id="pentagoo-board">
 <tr>
-	<td id="main-pentago-cell-1" class="main-pentago-cell">
+	<td id="sb-c-1" class="subboard-container">
 		<div>
 		<p class="rotation-buttons">
-		<a href="javascript:rotate('t1','l');" class="rotate-left" title="Rotate Left">Rotate Left</a>
-		<a href="javascript:rotate('t1','r');" class="rotate-right" title="Rotate Right">Rotate Right</a>
+		<a id="rb-00" class="rotate-left" title="Rotate Left">Rotate Left</a>
+		<a id="rb-01" class="rotate-right" title="Rotate Right">Rotate Right</a>
 		</p>
-		<table class="table-block" id="t1">
+		<table class="subboard" id="sb-1">
 		<tr>
-		<td id="c00" onclick="alert('haha');"><span></span></td>
-		<td id="c01"><span></span></td>
-		<td id="c02"><span></span></td>
+		<td id="s-00"><span></span></td>
+		<td id="s-01"><span></span></td>
+		<td id="s-02"><span></span></td>
 		</tr>
 		<tr>
-		<td id="c10"><span></span></td>
-		<td id="c11"><span></span></td>
-		<td id="c12"><span></span></td>
+		<td id="s-10"><span></span></td>
+		<td id="s-11"><span></span></td>
+		<td id="s-12"><span></span></td>
 		</tr>
 		<tr>
-		<td id="c20"><span></span></td>
-		<td id="c21"><span></span></td>
-		<td id="c22"><span></span></td>
+		<td id="s-20"><span></span></td>
+		<td id="s-21"><span></span></td>
+		<td id="s-22"><span></span></td>
 		</tr>
 		</table>
 		</div>
 	</td>
-	<td id="main-pentago-cell-2" class="main-pentago-cell">
+	<td id="sb-c-2" class="subboard-container">
 		<div>
 		<p class="rotation-buttons">
-		<a href="javascript:rotate('t2','l');" class="rotate-left" title="Rotate Left">Rotate Left</a>
-		<a href="javascript:rotate('t2','r');" class="rotate-right" title="Rotate Right">Rotate Right</a>
+		<a id="rb-02" class="rotate-left" title="Rotate Left">Rotate Left</a>
+		<a id="rb-03" class="rotate-right" title="Rotate Right">Rotate Right</a>
 		</p>
-		<table class="table-block" id="t2">
+		<table class="subboard" id="sb-2">
 		<tr>
-		<td id="c03"><span></span></td>
-		<td id="c04"><span></span></td>
-		<td id="c05"><span></span></td>
+		<td id="s-03"><span></span></td>
+		<td id="s-04"><span></span></td>
+		<td id="s-05"><span></span></td>
 		</tr>
 		<tr>
-		<td id="c13"><span></span></td>
-		<td id="c14"><span></span></td>
-		<td id="c15"><span></span></td>
+		<td id="s-13"><span></span></td>
+		<td id="s-14"><span></span></td>
+		<td id="s-15"><span></span></td>
 		</tr>
 		<tr>
-		<td id="c23"><span></span></td>
-		<td id="c24"><span></span></td>
-		<td id="c25"><span></span></td>
+		<td id="s-23"><span></span></td>
+		<td id="s-24"><span></span></td>
+		<td id="s-25"><span></span></td>
 		</tr>
 		</table>
 		</div>
 	</td>
 </tr>
 <tr>
-	<td id="main-pentago-cell-3" class="main-pentago-cell">
+	<td id="sb-c-3" class="subboard-container">
 		<div>
-		<table class="table-block" id="t3">
+		<table class="subboard" id="sb-3">
 		<tr>
-		<td id="c30"><span></span></td>
-		<td id="c31"><span></span></td>
-		<td id="c32"><span></span></td>
+		<td id="s-30"><span></span></td>
+		<td id="s-31"><span></span></td>
+		<td id="s-32"><span></span></td>
 		</tr>
 		<tr>
-		<td id="c40"><span></span></td>
-		<td id="c41"><span></span></td>
-		<td id="c42"><span></span></td>
+		<td id="s-40"><span></span></td>
+		<td id="s-41"><span></span></td>
+		<td id="s-42"><span></span></td>
 		</tr>
 		<tr>
-		<td id="c50"><span></span></td>
-		<td id="c51"><span></span></td>
-		<td id="c52"><span></span></td>
+		<td id="s-50"><span></span></td>
+		<td id="s-51"><span></span></td>
+		<td id="s-52"><span></span></td>
 		</tr>
 		</table>
 		<p class="rotation-buttons">
-		<a href="javascript:rotate('t3','l');" class="rotate-left" title="Rotate Left">Rotate Left</a>
-		<a href="javascript:rotate('t3','r');" class="rotate-right" title="Rotate Right">Rotate Right</a>
+		<a id="rb-10" class="rotate-left" title="Rotate Left">Rotate Left</a>
+		<a id="rb-11" class="rotate-right" title="Rotate Right">Rotate Right</a>
 		</p>
 		</div>
 	</td>
-	<td id="main-pentago-cell-4" class="main-pentago-cell">
+	<td id="sb-c-4" class="subboard-container">
 		<div>
-		<table class="table-block" id="t4">
+		<table class="subboard" id="sb-4">
 		<tr>
-		<td id="c33"><span></span></td>
-		<td id="c34"><span></span></td>
-		<td id="c35"><span></span></td>
+		<td id="s-33"><span></span></td>
+		<td id="s-34"><span></span></td>
+		<td id="s-35"><span></span></td>
 		</tr>
 		<tr>
-		<td id="c43"><span></span></td>
-		<td id="c44"><span></span></td>
-		<td id="c45"><span></span></td>
+		<td id="s-43"><span></span></td>
+		<td id="s-44"><span></span></td>
+		<td id="s-45"><span></span></td>
 		</tr>
 		<tr>
-		<td id="c53"><span></span></td>
-		<td id="c54"><span></span></td>
-		<td id="c55"><span></span></td>
+		<td id="s-53"><span></span></td>
+		<td id="s-54"><span></span></td>
+		<td id="s-55"><span></span></td>
 		</tr>
 		</table>
 		<p class="rotation-buttons">
-		<a href="javascript:rotate('t4','l');" class="rotate-left" title="Rotate Left">Rotate Left</a>
-		<a href="javascript:rotate('t4','r');" class="rotate-right" title="Rotate Right">Rotate Right</a>
+		<a id="rb-12" class="rotate-left" title="Rotate Left">Rotate Left</a>
+		<a id="rb-13" class="rotate-right" title="Rotate Right">Rotate Right</a>
 		</p>
 		</div>
 	</td>
@@ -192,19 +238,18 @@
 
 <ul id="player-labels">
 <li id="player-1-label">
-	<div class="player-text"><span></span>Player 1</div>
-	<div id="player-1-type">Human</div>
+	<img src="images/tiny-white-piece.png" width="12" height="12" alt="(White)" /> Player 1
+	<span id="player-1-type">Human</span>
 </li>
 <li id="player-2-label">
-	<div class="player-text"><span></span>Player 2</div>
-	<div id="player-2-type">Human</div>
+	<img src="images/tiny-black-piece.png" width="12" height="12" alt="(Black)" /> Player 2
+	<span id="player-2-type">Human</span>
 </li>
 </ul>
 
 <div id="debug"></div>
-<div id="debug1"></div>
-<div id="debug2"></div>
-<div id="debug3"></div>
+
 </div>
+
 </body>
 </html>
