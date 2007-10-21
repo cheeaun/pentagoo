@@ -1,0 +1,30 @@
+/*
+ * Stylesheet: pentagoo-air.css
+ * Author: Lim Chee Aun
+ */
+
+body{
+overflow: hidden !important; /*Hide scrollbars*/
+-webkit-user-select: ignore; /*Disable cursor selection*/
+}
+
+#container{
+margin: 0;
+border: 0;
+}
+
+#download-link,
+#download{
+display: none !important;
+}
+
+.panel-error{
+display: block;
+font-weight: bold;
+color: #000;
+background-color: #FFFFCB;
+border: 1px solid #FFFF73;
+text-align: center;
+padding: .5em 1em;
+margin-bottom: .5em;
+}

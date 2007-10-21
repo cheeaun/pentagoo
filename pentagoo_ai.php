@@ -45,19 +45,12 @@ for($c = 0; $c < 6; ++$c)
 switch($level)
 {
 	case '0':
-		include_once('ai\ai_0.php'); // AI - Random
+		include_once('ai\ai_0.php'); // AI - Minimax
 		break;
 	case '1':
 		include_once('ai\ai_1.php'); // AI - Minimax
 		break;
-	case '2':
-		include_once('ai\ai_2.php'); // AI - Minimax
 }
 
-echo $x.$y.$t.$d.' - <font size="1">'; // OUTPUT!
-
-for($i = 0; $i < 36; ++$i)
-	echo $matrix_arr1[$i];
-
-echo ' - </font>';
+echo $x.$y.$t.$d;
 ?>
