@@ -1,0 +1,5 @@
+## MIME TYPES ###
+AddType application/vnd.adobe.air-application-installer-package+zip .air
+
+RewriteEngine on
+RewriteRule ^download/?$ http://pentagoo.googlecode.com/files/pentagoo-0.1.air [QSA,L]
