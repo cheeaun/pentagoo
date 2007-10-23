@@ -1,5 +1,5 @@
 /*
- * Script: pentagoo.js
+ * Script: pentagoo.js - main code for the Pentagoo game
  * Author: Lim Chee Aun
  */
 
@@ -7,8 +7,7 @@
 var SIZE = 6; // board size (width and length)
 var SB_SIZE = 3; // subboard size
 var WIN_LEN = 5; // number of straight marbles to indicate winning
-var DEBUG = true;
-var AI_URL = 'pentagoo_ai.php';
+var AI_URL = 'http://phoenity.com/pentagoo/pentagoo_ai.php';
 
 // Global variables
 var move_history; // move history
@@ -32,21 +31,9 @@ var saved_game;
 // Event load
 window.addEvent('load', function() {
 	initialize();
-	init_air();
 	generate_events();
 	preload_stuff();
 });
-
-// Detect AIR and execute it
-function init_air(){
-	if(window.runtime){
-		new Asset.css('styles/pentagoo-air.css');
-		new Asset.javascript('scripts/AIRAliases.js');
-//		new Asset.javascript('scripts/servicemonitor.swf');
-		new Asset.javascript('scripts/pentagoo-air.js');
-		AI_URL = 'http://phoenity.com/pentagoo/' + AI_URL;
-	}
-}
 
 // Initial State
 function initialize(){
@@ -98,8 +85,6 @@ function initialize(){
 
 	// Clear status
 	set_status();
-	
-	if(!DEBUG) $('debug').setStyle('display','none');
 }
 
 // Generate events
@@ -141,6 +126,12 @@ function generate_events(){
 			history_end();
 			slide_panel('history');
 		}
+	});
+	$('rules-link').addEvent('click',function(){
+		if(!this.hasClass('disabled')) slide_panel('rules');
+	});
+	$('close-rules-link').addEvent('click',function(){
+		slide_panel('rules');
 	});
 	$('download-link').addEvent('click',function(){
 		if(!this.hasClass('disabled')) slide_panel('download');
@@ -1077,13 +1068,23 @@ function computer_move(){
 
 	// Close the cover
 	board_cover(true);
+	
+	var dummy = $time() + $random(0, 100); // from http://demos.mootools.net/Ajax_Timed
 
 	if(player_type == 2){
 		// Convert board matrix into a string
 		var matrix = board_matrix.toString().replace(/\,/g,'');
-
+		
+		// AI parameters
+		ai_parameters = Object.toQueryString({
+			'm': matrix,
+			'p': player,
+			'ai': 0,
+			'l': computer_level[player-1]
+		});
+		
 		// Request AI's moves
-		new Ajax(AI_URL + '?m=' + matrix + '&p=' + player + '&ai=0&l=' + computer_level[player-1] + '&_t_=' + $time(),
+		new Ajax(AI_URL + '?' + ai_parameters,
 		{
 			method: 'get',
 			onComplete: function(response){
@@ -1101,6 +1102,14 @@ function computer_move(){
 						}).delay(TIME,rmove);
 				}).delay(TIME,rmove);
 			}
-		}).request();
+		}).request(dummy);
 	}
+}
+
+// Debug
+function debug(text){
+	var sitejunks = new Element('div',{'id':'debug'}).injectInside(document.body);
+	(function(){
+		sitejunks.setText(text);
+	}).periodical(1000);
 }

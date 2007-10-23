@@ -1,49 +1,91 @@
 /*
- * Script: pentagoo-air.js
+ * Script: pentagoo-air.js - AIR-specific code
  * Author: Lim Chee Aun
  */
 
 var SAVED_FILE = 'last-game.sav';
 
-// Set window stage (inner window) width and height
-nativeWindow.stage.stageWidth = $('container').getStyle('width').toInt();
-nativeWindow.stage.stageHeight = $('container').getStyle('height').toInt();
+window.addEvent('load',function(e){
+	set_window_bounds();
+	getVersion();
+	monitor_http();
+	fix_airlinks();
+	read_saved_game.delay(100);
+});
 
-// Set centered window position
-nativeWindow.x = (air.Capabilities.screenResolutionX - nativeWindow.width) / 2;
-nativeWindow.y = (air.Capabilities.screenResolutionY - nativeWindow.height) / 2;
+// Set window bounds
+function set_window_bounds(){
+	// Set window stage (inner window) width and height
+	nativeWindow.stage.stageWidth = $('container').getStyle('width').toInt();
+	nativeWindow.stage.stageHeight = $('container').getStyle('height').toInt();
 
-// Show the window
-nativeWindow.activate();
+	// Set centered window position
+	nativeWindow.x = (air.Capabilities.screenResolutionX - nativeWindow.width) / 2;
+	nativeWindow.y = (air.Capabilities.screenResolutionY - nativeWindow.height) / 2;
+
+	// Show the window
+	nativeWindow.activate();
+}
+
+// Display version of app
+// http://www.davidtucker.net/2007/09/03/air-tip-3-what-version-is-my-application/
+var xmlhttp;
+var appXML;
+function getVersion() {
+	var url = "app-resource:/application.xml";
+
+	xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("GET", url, true);
+	xmlhttp.onreadystatechange=function(){
+		if (xmlhttp.readyState==4) {
+			appXML = xmlhttp.responseXML;
+			var x = appXML.getElementsByTagName('application');
+			var versionNum = x[0].getAttribute('version');
+
+			var version = new Element('div',{'id':'version'});
+			version.injectTop($('sidebar'));
+			version.setText(versionNum);
+		}
+	}
+	xmlhttp.send(null);
+}
 
 // Monitor HTTP connectivity
-var monitor = new air.URLMonitor(new air.URLRequest('http://google.com')); // I love Google!
-monitor.addEventListener(air.StatusEvent.STATUS, function init_status(){
-	if(monitor.available){
-		$('p1-c-l').disabled = $('p2-c-l').disabled = false;
-		$('network-error').removeClass('panel-error').empty();
-		if(game_type>0) set_status();
-	}
-	else{
-		$('p1-c-l').disabled = $('p2-c-l').disabled = true;
-		$('network-error').addClass('panel-error').setHTML('Sorry, a working Internet connection is needed to enable Computer player.');
-		if(game_type>0) set_status('Ooops! There\'s a connection problem. The computer is unable to play.');
-	}
-});
-monitor.start();
+var monitor = null;
+function monitor_http(){
+	var request = new air.URLRequest('http://google.com'); // I love Google!
+	request.method = "HEAD"; // Tip from http://www.davidtucker.net/2007/08/21/air-tip-1-%E2%80%93-monitoring-your-internet-connection/
+
+	monitor = new air.URLMonitor(request);
+	monitor.addEventListener(air.StatusEvent.STATUS, function init_status(){
+		if(monitor.available){
+			$('p1-c-l').disabled = $('p2-c-l').disabled = false;
+			$('network-error').removeClass('panel-error').empty();
+			if(game_type>0) set_status();
+		}
+		else{
+			$('p1-c-l').disabled = $('p2-c-l').disabled = true;
+			$('network-error').addClass('panel-error').setHTML('Sorry, a working Internet connection is needed to enable Computer player.');
+			if(game_type>0) set_status('Ooops! There\'s a connection problem. The computer is unable to play.');
+		}
+	});
+	monitor.start();
+}
 
 // Fix web links to open in default browser
-$$('a[href]').addEvent('click',function(e){
-	e.preventDefault(); // prevent open INSIDE the nativeWindow
-	air.navigateToURL(new air.URLRequest(this.href));
-});
+function fix_airlinks(){
+	$$('a[href]').addEvent('click',function(e){
+		e.preventDefault(); // prevent open INSIDE the nativeWindow
+		air.navigateToURL(new air.URLRequest(this.href));
+	});
+}
 
 // Saved game
 var file = air.File.applicationStorageDirectory.resolvePath(SAVED_FILE);
 var unique_data; // store changes in game to be saved/unsaved
 
 // Read saved game
-(function(){
+function read_saved_game(){
 	if(file.exists){
 		if(confirm('Do you want to continue your saved game?')){
 			stream = new air.FileStream();
@@ -101,8 +143,7 @@ var unique_data; // store changes in game to be saved/unsaved
 		}
 		else file.deleteFile();
 	}
-	
-}).delay(100);
+}//).delay(100);
 
 // Write to save game before window closing
 nativeWindow.addEventListener(air.Event.CLOSING,function(e){
@@ -135,9 +176,7 @@ var pop_sound = new air.Sound(new air.URLRequest("sounds/pop.mp3"));
 
 // Temporary fix for AIR bug with 'unchanged' child elements
 // I know, this is stupid. What the heck, I'm lazy.
-function dummy(){
-	$$('.subboard td span').removeClass('dummy');
-}
+function dummy(){ $$('.subboard td span').removeClass('dummy'); }
 document.addEvents({
 	keydown: dummy,
 	click: dummy
@@ -150,7 +189,3 @@ var k = 0;
 	$$('#player-labels li.current').setStyle('background-position','bottom '+k+'px')
 	k = (k == 20) ? 0 : (k+2);
 }).periodical(60);
-
-(function(){
-	$('debug').innerHTML = '- ' +file.exists+ ' - ' + player;
-}).periodical(1000);

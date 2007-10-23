@@ -1,5 +1,5 @@
 /*
- * Stylesheet: pentagoo-air.css
+ * Stylesheet: pentagoo-air.css - additional styles for AIR
  * Author: Lim Chee Aun
  */
 
@@ -13,6 +13,17 @@ margin: 0;
 border: 0;
 }
 
+#version{
+position: absolute;
+width: 96px;
+text-align: right;
+color: #A4C6F4;
+background-color: transparent;
+font-weight: bold;
+font-size: 1.1em;
+}
+
+/* Hide stuff */
 #download-link,
 #download{
 display: none !important;

@@ -61,7 +61,7 @@
         Note: In Flex Builder, the SWF reference required within this tag will  
         be set automatically when you launch or export this application.
     -->
-    <content>index.html</content>
+    <content>pentagoo.html</content>
 
     <!--
         Specifies the type of system chrome used by the window.
@@ -105,7 +105,7 @@
 
         Default value: false
     -->
-    <visible/>
+    <visible>false</visible>
 
     <!-- 
         Other settings for the initial window.

@@ -1,5 +1,5 @@
 /*
- * Stylesheet: pentagoo.css
+ * Stylesheet: pentagoo.css - main styles for the Pentagoo UI
  * Author: Lim Chee Aun
  */
 
@@ -15,6 +15,7 @@ cursor: default;
 }
 
 input,button,select{
+font-size: 100%;
 font-family: "century gothic", arial, sans-serif;
 }
 
@@ -128,7 +129,7 @@ overflow: auto;
 
 .panel h2{
 margin: 0;
-padding: 10px 10px 0;
+padding: 10px 10px 6px;
 font-weight: normal;
 font-size: 1.3em;
 }
@@ -155,14 +156,16 @@ margin: 0 2em 1em;
 padding: 0;
 }
 .panel ul{
-margin: .2em .5em .2em 2.5em;
+margin: 0em .5em .8em 2.5em;
 padding: 0;
 }
 
 p.panel-button{
 position: relative;
 text-align: right;
-margin: .5em 0 0;
+margin: .2em 0 0;
+padding: .6em;
+border-top: 1px solid #eee;
 }
 
 /* PLAYER SETUP PANEL */
@@ -434,17 +437,7 @@ background: transparent url(images/pointer.png) no-repeat;
 margin-left: -3px;
 }
 
-/* DEBUG */
-
-#debug{
-position: absolute;
-bottom: 0;
-left: 0;
-z-index: 99999;
-background-color: red;
-color: #fff;
-padding: 1em;
-}
+/* DOWNLOAD BADGE */
 
 #download-badge{
 display: block;
@@ -477,4 +470,25 @@ margin-top: 30px;
 color: #000;
 background-color: transparent;
 font-size: 1.2em;
+}
+
+/* DEBUG */
+
+#debug{
+position: absolute;
+bottom: 0;
+left: 0;
+z-index: 99999;
+background-color: red;
+color: #fff;
+padding: 1em;
+}
+
+/* DIGG */
+
+#digg-button{
+position: absolute;
+top: 6%;
+left: 50%;
+margin-left: 330px;
 }
