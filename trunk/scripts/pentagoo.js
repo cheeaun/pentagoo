@@ -7,7 +7,8 @@
 var SIZE = 6; // board size (width and length)
 var SB_SIZE = 3; // subboard size
 var WIN_LEN = 5; // number of straight marbles to indicate winning
-var AI_URL = 'http://phoenity.com/pentagoo/pentagoo_ai.php';
+var AI_URL = 'pentagoo_ai.php';
+if(window.runtime) AI_URL = 'http://phoenity.com/pentagoo/pentagoo_ai.php';
 
 // Global variables
 var move_history; // move history
