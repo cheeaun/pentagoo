@@ -42,13 +42,14 @@ for($c = 0; $c < 6; ++$c)
 	for($r = 0; $r < 6 ; ++$r)
 		$matrix_arr2[$c][$r] = array_shift($matrix_arr);
 
+$dir_path = dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR;
 switch($level)
 {
 	case '0':
-		include_once('ai\ai_0.php'); // AI - Minimax
+		include_once($dir_path.'ai/ai_0.php'); // AI - Minimax
 		break;
 	case '1':
-		include_once('ai\ai_1.php'); // AI - Minimax
+		include_once($dir_path.'ai/ai_1.php'); // AI - Minimax
 		break;
 }
 
