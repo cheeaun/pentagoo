@@ -43,6 +43,7 @@ for($c = 0; $c < 6; ++$c)
 		$matrix_arr2[$c][$r] = array_shift($matrix_arr);
 
 $dir_path = dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR;
+/*
 switch($level)
 {
 	case '0':
@@ -52,6 +53,8 @@ switch($level)
 		include_once($dir_path.'ai/ai_1.php'); // AI - Minimax
 		break;
 }
+*/
+include_once($dir_path.'ai/ai_1.php'); // AI by Mickael ROUVIER
 
 echo $x.$y.$t.$d;
 ?>
