@@ -73,8 +73,6 @@ function initialize(){
 	$('player-1-label').addClass('current');
 	$('player-2-label').removeClass('current');
 	player_type = 1;
-	$('p1-h-l').checked = true;
-	$('p2-h-l').checked = true;
 
 	// Styles for rotation buttons
 	$$('.rotation-buttons').setStyle('opacity', 0);
