@@ -75,13 +75,13 @@ function initialize(){
 	player_type = 1;
 
 	// Styles for rotation buttons
-	$$('.rotation-buttons').setOpacity(0);
+	$$('.rotation-buttons').setStyle('opacity', 0);
 
 	// Styles for sub-boards
-	$$('.subboard').setOpacity(1);
+	$$('.subboard').setStyle('opacity', 1);
 
 	// Styles for panels
-	if(!window.ie) $$('.panel').setOpacity('.85');
+	if(!window.ie) $$('.panel').setStyle('opacity', '.85');
 
 	// Clear status
 	set_status();
@@ -257,6 +257,7 @@ function preload_stuff(){
 		path + 'pentago-subboard-60deg.png',
 		path + 'pentago-subboard-75deg.png',
 		path + 'marble-select.png',
+		path + 'highlight-marble.png',
 		path + 'pointer.png'
 	];
 
@@ -283,7 +284,7 @@ function slide_panel(panel){
 
 	// Panel effects
 	if(panel){
-		var panel_effect = new Fx.Style(panel, 'width', {duration: 150});
+		var panel_effect = new Fx.Tween(panel, { duration: 200 });
 
 		if($(panel).getStyle('width').toInt() == 0){
 			// Add 'focus' to panel's link
@@ -292,7 +293,7 @@ function slide_panel(panel){
 			// Close the cover
 			board_cover(true);
 
-			panel_effect.start(520);
+			panel_effect.start('width', 520);
 		}
 		else{
 			// Remove 'focus' to panel's link
@@ -301,7 +302,7 @@ function slide_panel(panel){
 			// Open up the cover if not game
 			if(!game) board_cover(false);
 
-			panel_effect.start(0);
+			panel_effect.start('width', 0);
 		}
 	}
 
@@ -322,21 +323,21 @@ function new_game(){
 
 	// Set default players and game type
 	game_type = 0;
-	$('player-1-type').setText('Human');
-	$('player-2-type').setText('Human');
+	$('player-1-type').set('text', 'Human');
+	$('player-2-type').set('text', 'Human');
 
 	// Player selection & Computer levels
 	if($('p1-c-l').checked){
 		game_type = 1;
 		player_type = 2;
 		computer_level[0] = $('p1-cl').selectedIndex;
-		$('player-1-type').setText('Computer');
+		$('player-1-type').set('text', 'Computer');
 		computer_move();
 	}
 	if($('p2-c-l').checked){
 		computer_level[1] = $('p2-cl').selectedIndex;
 		game_type = (game_type == 1) ? 2 : 1;
-		$('player-2-type').setText('Computer');
+		$('player-2-type').set('text', 'Computer');
 	}
 }
 
@@ -527,7 +528,7 @@ function subboard_rotation_fx(subboard, direction){
 			div.className = '';
 
 			// Set back the subboard opacity
-			$('sb-'+subboard).setOpacity(1);
+			$('sb-'+subboard).setStyle('opacity', 1);
 
 			return;
 		}
@@ -537,7 +538,7 @@ function subboard_rotation_fx(subboard, direction){
 
 			// Set opacity for sub-board (fading effect)
 			opac = Math.abs(mid_frame-k)/mid_frame;
-			$('sb-'+subboard).setOpacity(opac);
+			$('sb-'+subboard).setStyle('opacity', opac);
 
 			// Rotate the marbles during half-time of animation
 			if(k == Math.round(mid_frame)){
@@ -620,11 +621,11 @@ function rotate_buttons(show){
 	var opac = rotation_button[0].getStyle('opacity');
 
 	if(show && opac == 0){
-		rotation_button.setOpacity('.4');
+		rotation_button.setStyle('opacity', '.4');
 		move_state = 1;
 	}
 	else if(!show && opac > 0){
-		rotation_button.setOpacity(0);
+		rotation_button.setStyle('opacity', 0);
 		move_state = 0;
 	}
 }
@@ -1037,7 +1038,7 @@ function check_winning_marbles(x,y, direction){
 // Status display
 function set_status(text){
 	if($defined(text)) {
-		$('status').setText(text);
+		$('status').set('text', text);
 		$('status').setStyle('visibility','visible');
 	}
 	else{
@@ -1053,24 +1054,24 @@ function computer_move(){
 	// Close the cover
 	board_cover(true);
 	
-	var dummy = $time() + $random(0, 100); // from http://demos.mootools.net/Ajax_Timed
-
 	if(player_type == 2){
 		// Convert board matrix into a string
 		var matrix = board_matrix.toString().replace(/\,/g,'');
 		
 		// AI parameters
-		ai_parameters = Object.toQueryString({
+		ai_parameters = {
 			'm': matrix,
 			'p': player,
 			'ai': 0,
-			'l': computer_level[player-1]
-		});
+			'l': computer_level[player-1],
+			'_t': $time() + $random(0, 100)
+		};
 		
 		// Request AI's moves
-		new Ajax(AI_URL + '?' + ai_parameters,
-		{
+		new Request({
+			url: AI_URL,
 			method: 'get',
+			data: ai_parameters,
 			onComplete: function(response){
 				var rmove = response.split(''); //x,y,t,d
 
@@ -1085,14 +1086,14 @@ function computer_move(){
 						}).delay(TIME,rmove);
 				}).delay(TIME,rmove);
 			}
-		}).request(dummy);
+		}).send();
 	}
 }
 
 // Debug
 function debug(text){
-	var sitejunks = new Element('div',{'id':'debug'}).injectInside(document.body);
+	var sitejunks = new Element('div',{'id':'debug'}).inject(document.body);
 	(function(){
-		sitejunks.setText(text);
+		sitejunks.set('text', text);
 	}).periodical(1000);
 }
