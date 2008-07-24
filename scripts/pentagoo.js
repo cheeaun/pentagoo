@@ -8,7 +8,6 @@ var SIZE = 6; // board size (width and length)
 var SB_SIZE = 3; // subboard size
 var WIN_LEN = 5; // number of straight marbles to indicate winning
 var AI_URL = 'pentagoo_ai.php';
-if(window.runtime) AI_URL = 'http://phoenity.com/pentagoo/pentagoo_ai.php';
 
 // Global variables
 var move_history; // move history
@@ -133,12 +132,6 @@ function generate_events(){
 	});
 	$('close-rules-link').addEvent('click',function(){
 		slide_panel('rules');
-	});
-	$('download-link').addEvent('click',function(){
-		if(!this.hasClass('disabled')) slide_panel('download');
-	});
-	$('close-download-link').addEvent('click',function(){
-		slide_panel('download');
 	});
 	$('about-link').addEvent('click',function(){
 		if(!this.hasClass('disabled')) slide_panel('about');
@@ -274,7 +267,7 @@ function preload_stuff(){
 	new Asset.images(images, {
 		onProgress: function(i){
 			var load_percent = Math.round((i+1)/images.length*100);
-			if(!window.runtime && i < images.length) set_status('Loading... (' + load_percent + '%)');
+			if(i < images.length) set_status('Loading... (' + load_percent + '%)');
 		},
 		onComplete: function(){
 			set_status();
@@ -298,9 +291,6 @@ function slide_panel(panel){
 
 			// Close the cover
 			board_cover(true);
-			
-			// Pop sound
-			if(window.runtime) pop_sound.play();
 
 			panel_effect.start(520);
 		}
@@ -385,9 +375,6 @@ function move_place(x,y){
 		// Indicate last marble
 		last_marble = ''+y+x;
 		space.addClass('last');
-		
-		// Place sound effect
-		if(window.runtime) place_sound.play();
 
 		return true;
 	}
@@ -525,9 +512,6 @@ function subboard_rotation_fx(subboard, direction){
 	var PERIOD = 32; // frame period
 	var opac; // opacity
 	var mid_frame = FRAMES/2; // mid frame
-	
-	// Rotate sound effect
-	if(window.runtime) rotate_sound.play();
 
 	// Shift coordinates for specific quadrants
 	var sx = (subboard == 2 || subboard == 4) ? SB_SIZE : 0;
@@ -1055,7 +1039,6 @@ function set_status(text){
 	if($defined(text)) {
 		$('status').setText(text);
 		$('status').setStyle('visibility','visible');
-		if(window.runtime) status_sound.play();
 	}
 	else{
 		$('status').empty();
@@ -1094,7 +1077,6 @@ function computer_move(){
 				cmove[0] = (function(){
 					// Computer place
 					place(rmove[0].toInt(),rmove[1].toInt()); // x,y
-					if(window.runtime) document.fireEvent('click');
 
 					if(!game)
 						cmove[1] = (function(){
