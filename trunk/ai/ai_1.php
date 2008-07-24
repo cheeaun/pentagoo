@@ -368,7 +368,7 @@ if($player == 2) { $curPlayer = 2; $oppPlayer = 1; }
 else { $curPlayer = 1; $oppPlayer = 2; }
 
 // Run AlphaBeta Failsoft
-alphabeta_failsoft($curPlayer, $oppPlayer, $matrix_arr2, 0, 3, -50000, 50000, $cout);
+alphabeta_failsoft($curPlayer, $oppPlayer, $matrix_arr2, 0, 2, -50000, 50000, $cout);
 
 $x = $cout["r"];
 $y = $cout["c"];
