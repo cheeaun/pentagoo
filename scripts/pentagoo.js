@@ -1037,14 +1037,11 @@ function check_winning_marbles(x,y, direction){
 
 // Status display
 function set_status(text){
-	if($defined(text)) {
-		$('status').set('text', text);
-		$('status').setStyle('visibility','visible');
-	}
-	else{
-		$('status').empty();
-		$('status').setStyle('visibility','hidden');
-	}
+	var status = $('status');
+	if($defined(text))
+		status.set('text', text).fade(1);
+	else
+		status.empty().fade(0);
 }
 
 // Computer move
@@ -1056,7 +1053,7 @@ function computer_move(){
 	
 	if(player_type == 2){
 		// Convert board matrix into a string
-		var matrix = board_matrix.toString().replace(/\,/g,'');
+		var matrix = board_matrix.flatten().join('');
 		
 		// AI parameters
 		ai_parameters = {
