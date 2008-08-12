@@ -324,7 +324,7 @@ background-image: url(images/marble-select.png);
 
 .subboard-container .rotation-buttons{
 z-index: 30;
-background-image: url(dummy); /* fix IE bug with opaque elements */
+background-image: url(images/dummy.png); /* fix IE bug with opaque elements */
 }
 
 .rotation-buttons a{
