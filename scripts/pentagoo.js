@@ -206,10 +206,10 @@ var Pentagoo = new Class({
 						var x = self.highlightMarble.charAt(1).toInt();
 
 						switch(e.key){
-							case arrows[0]: (y==0) ? y=self.size-1 : y--; break; // up
-							case arrows[1]: (y==self.size-1) ? y=0 : y++; break; // down
-							case arrows[2]: (x==0) ? x=self.size-1 : x--; break; // left
-							case arrows[3]: (x==self.size-1) ? x=0 : x++; break; // right
+							case arrows[0]: (y==0) ? y=self.options.size-1 : y--; break; // up
+							case arrows[1]: (y==self.options.size-1) ? y=0 : y++; break; // down
+							case arrows[2]: (x==0) ? x=self.options.size-1 : x--; break; // left
+							case arrows[3]: (x==self.options.size-1) ? x=0 : x++; break; // right
 						}
 
 						self.highlightMarble = ''+y+x;
