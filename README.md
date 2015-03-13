@@ -1,7 +1,7 @@
 Pentagoo
 ===
 
-The popular *[Pentago](http://en.wikipedia.org/wiki/Pentago)* game by [MindTwister](http://www.mindtwisterusa.com/), written in Javascript.
+The popular **[Pentago](http://en.wikipedia.org/wiki/Pentago)** game by [MindTwister](http://www.mindtwisterusa.com/), written in Javascript.
 
 Features
 ---
@@ -42,4 +42,4 @@ Discussion
 Screenshot
 ---
 
-![](http://pentagoo.googlecode.com/svn/trunk/site/images/pentagoo-board.png)
+![](http://f.cl.ly/items/1j1s1w2l1K2z132X1G17/pentagoo-board.png)
