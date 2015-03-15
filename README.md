@@ -32,7 +32,7 @@ ToDo
 Demo
 ---
 
-<http://cheeaun.com/projects/pentagoo/>
+~~~cheeaun.com/projects/pentagoo/~~~ <https://pentagoo.herokuapp.com/>
 
 Discussion
 ---
