@@ -32,12 +32,12 @@ ToDo
 Demo
 ---
 
-~~cheeaun.com/projects/pentagoo/~~ <https://pentagoo.herokuapp.com/>
+~~cheeaun.com/projects/pentagoo/~~ <http://pentagoo.azurewebsites.net/>
 
 Discussion
 ---
 
-<http://groups.google.com/group/pentagoo>
+~~groups.google.com/group/pentagoo~~
 
 Screenshot
 ---
